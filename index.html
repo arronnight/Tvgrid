@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#07080a">
+  <meta name="description" content="TVGRID is a retro cable multiview: twelve live channels, a program guide, and a fast-paced signal-hunting game.">
+  <title>TVGRID — Cable Multiview</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="TVGRID home" id="brandHome">
+        <span class="brand-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="brand-word">TVGRID</span>
+        <span class="brand-sub">CABLE MULTIVIEW</span>
+      </a>
+
+      <div class="clock-block" aria-label="Current date and time">
+        <span class="clock-date" id="clockDate">SAT 24 OCT</span>
+        <time class="clock-time" id="clockTime">18:11:42</time>
+      </div>
+
+      <nav class="top-actions" aria-label="System controls">
+        <button class="btn btn-ghost" id="guideBtn" type="button">
+          <span>Guide</span><kbd>G</kbd>
+        </button>
+        <button class="btn btn-accent" id="gameBtn" type="button">
+          <span class="play-glyph" aria-hidden="true"></span>
+          <span>Signal Hunt</span>
+        </button>
+        <button class="btn btn-icon" id="soundBtn" type="button" aria-pressed="false" aria-label="Toggle sound">
+          <span class="audio-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+        </button>
+        <button class="btn btn-icon power-btn" id="powerBtn" type="button" aria-pressed="true" aria-label="Toggle power">
+          <span class="power-glyph" aria-hidden="true"></span>
+        </button>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section class="wall" aria-label="Television multiview wall">
+        <div class="wall-top">
+          <div class="wall-id">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span class="wall-title">MULTIVIEW WALL</span>
+            <span class="wall-count" id="wallCount">12 CH / 4×3</span>
+          </div>
+
+          <div class="layout-switch" id="layoutSwitch" role="group" aria-label="Multiview layout">
+            <button type="button" data-layout="2x2" aria-pressed="false">2×2</button>
+            <button type="button" data-layout="3x2" aria-pressed="false">3×2</button>
+            <button type="button" data-layout="3x3" aria-pressed="false">3×3</button>
+            <button type="button" data-layout="4x3" aria-pressed="true">4×3</button>
+          </div>
+
+          <div class="game-strip" id="gameStrip" hidden>
+            <div class="target-monitor" aria-hidden="true">
+              <canvas id="targetCanvas" width="320" height="180"></canvas>
+            </div>
+            <div class="game-strip-copy">
+              <span class="game-eyebrow">TARGET BROADCAST</span>
+              <strong id="gameClue">MATCH THIS SIGNAL TO A MONITOR</strong>
+            </div>
+            <div class="game-timer" aria-hidden="true">
+              <span id="gameClock">10.0</span>
+              <div class="timer-track"><i id="gameTimerFill"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tv-grid" id="tvGrid" data-layout="4x3" aria-live="off"></div>
+
+        <div class="wall-foot">
+          <div class="signal-bars" aria-label="Signal strength full">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <span id="wallStatus">ALL CHANNELS LOCKED</span>
+          <span class="wall-foot-sep" aria-hidden="true">//</span>
+          <span>STEREO BROADCAST</span>
+          <span class="wall-foot-spacer"></span>
+          <button class="text-btn" id="shuffleBtn" type="button">SHUFFLE WALL</button>
+        </div>
+
+        <div class="ticker" aria-label="Now playing ticker">
+          <span class="ticker-tag">NOW</span>
+          <div class="ticker-viewport">
+            <div class="ticker-track" id="tickerTrack"></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="monitor" aria-label="Selected channel monitor">
+        <div class="channel-panel" id="channelPanel">
+          <div class="monitor-head">
+            <span>MONITOR 03</span>
+            <span class="monitor-state" id="monitorState">LIVE</span>
+          </div>
+
+          <div class="monitor-channel">
+            <span class="monitor-num" id="selNum">02</span>
+            <div class="monitor-name-block">
+              <h1 id="selName">NIGHT OWL</h1>
+              <p id="selMeta">KOWL · TALK · STEREO</p>
+            </div>
+          </div>
+
+          <div class="now-card">
+            <div class="card-label">NOW PLAYING</div>
+            <div class="show-title" id="selShow">After Hours</div>
+            <div class="progress-track" aria-hidden="true"><i id="progressFill"></i></div>
+            <div class="time-row">
+              <span id="selStart">00:00</span>
+              <span id="selRemaining">60 MIN LEFT</span>
+              <span id="selEnd">01:00</span>
+            </div>
+          </div>
+
+          <div class="up-next">
+            <span class="card-label">UP NEXT</span>
+            <span id="selNext">Midnight Calls</span>
+            <span class="up-next-time" id="selNextTime">01:00</span>
+          </div>
+
+          <div class="monitor-controls">
+            <button class="btn btn-ghost" id="prevBtn" type="button" aria-label="Previous channel">PREV</button>
+            <button class="btn btn-solid" id="expandBtn" type="button">EXPAND</button>
+            <button class="btn btn-ghost" id="nextBtn" type="button" aria-label="Next channel">NEXT</button>
+          </div>
+
+          <div class="favorite-row">
+            <button class="btn btn-ghost fav-btn" id="favBtn" type="button" aria-pressed="false">
+              <span class="star" aria-hidden="true">★</span> <span id="favLabel">ADD TO FAVORITES</span>
+            </button>
+          </div>
+
+          <div class="schedule">
+            <div class="schedule-head">
+              <span class="card-label">TODAY'S LINEUP</span>
+              <button class="text-btn" id="panelGuideBtn" type="button">FULL GUIDE</button>
+            </div>
+            <ol class="schedule-list" id="scheduleList"></ol>
+          </div>
+
+          <div class="monitor-foot">
+            <span>CH <b id="footChannel">02</b></span>
+            <span class="monitor-foot-spacer"></span>
+            <span id="footCallsign">KOWL</span>
+          </div>
+        </div>
+
+        <div class="game-panel" id="gamePanel" hidden>
+          <div class="monitor-head">
+            <span>SIGNAL HUNT</span>
+            <span class="monitor-state is-hot">LIVE</span>
+          </div>
+          <div class="game-big">
+            <span class="card-label">ROUND</span>
+            <div class="game-round"><b id="gameRound">1</b><span>/ 5</span></div>
+          </div>
+          <div class="game-stats">
+            <div>
+              <span class="card-label">SCORE</span>
+              <strong id="gameScore">0000</strong>
+            </div>
+            <div>
+              <span class="card-label">STREAK</span>
+              <strong id="gameStreak">0</strong>
+            </div>
+            <div>
+              <span class="card-label">BEST</span>
+              <strong id="gameBest">0000</strong>
+            </div>
+          </div>
+          <p class="game-help">One of the twelve monitors is showing the target broadcast. Click it before the timer runs out. Misses cost time.</p>
+          <div class="game-legend">
+            <span><i class="legend-dot is-good"></i> HIT</span>
+            <span><i class="legend-dot is-bad"></i> MISS</span>
+          </div>
+          <button class="btn btn-ghost game-quit" id="quitGameBtn" type="button">EXIT HUNT</button>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <div class="overlay" id="guideOverlay" hidden>
+    <div class="overlay-card guide-card" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+      <div class="overlay-head">
+        <div>
+          <span class="card-label">TVGRID PROGRAMMING</span>
+          <h2 id="guideTitle">Program Guide</h2>
+        </div>
+        <div class="overlay-head-right">
+          <span class="guide-now" id="guideNow">18:00</span>
+          <button class="close-btn" type="button" data-close="guideOverlay" aria-label="Close guide">×</button>
+        </div>
+      </div>
+      <div class="guide-legend">
+        <span><i class="legend-dot is-now"></i> ON NOW</span>
+        <span><i class="legend-dot is-fav"></i> FAVORITE</span>
+        <span class="guide-hint">CLICK A PROGRAM TO TUNE IN</span>
+      </div>
+      <div class="guide-scroll" id="guideScroll">
+        <div class="guide-timebar" id="guideTimebar"></div>
+        <div class="guide-rows" id="guideRows"></div>
+      </div>
+      <div class="overlay-foot">
+        <span>ALL TIMES LOCAL</span>
+        <span>GUIDE DATA SIMULATED · 24H CABLE SCHEDULE</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="focusOverlay" hidden>
+    <div class="overlay-card focus-card" role="dialog" aria-modal="true" aria-labelledby="focusTitle">
+      <div class="focus-head">
+        <div>
+          <span class="card-label" id="focusMeta">CH 02 · KOWL</span>
+          <h2 id="focusTitle">NIGHT OWL</h2>
+        </div>
+        <button class="close-btn" type="button" data-close="focusOverlay" aria-label="Close full screen">×</button>
+      </div>
+      <div class="focus-screen">
+        <canvas id="focusCanvas" width="1280" height="720"></canvas>
+        <div class="screen-glass" aria-hidden="true"></div>
+        <div class="screen-scan" aria-hidden="true"></div>
+        <div class="focus-bug" id="focusBug">TVGRID</div>
+      </div>
+      <div class="focus-bottom">
+        <div class="focus-now">
+          <span class="card-label">NOW PLAYING</span>
+          <strong id="focusShow">After Hours</strong>
+          <span id="focusTime">00:00 – 01:00</span>
+        </div>
+        <div class="focus-actions">
+          <button class="btn btn-ghost" id="focusPrev" type="button">PREV</button>
+          <button class="btn btn-ghost" id="focusNext" type="button">NEXT</button>
+          <button class="btn btn-solid" id="focusClose" type="button">BACK TO WALL</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="resultOverlay" hidden>
+    <div class="overlay-card result-card" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+      <span class="card-label">SIGNAL HUNT COMPLETE</span>
+      <h2 id="resultTitle">Transmission Secured</h2>
+      <div class="result-score" id="resultScore">0000</div>
+      <div class="result-grid">
+        <div><span class="card-label">HITS</span><strong id="resultHits">0 / 5</strong></div>
+        <div><span class="card-label">BEST</span><strong id="resultBest">0000</strong></div>
+        <div><span class="card-label">ACCURACY</span><strong id="resultAccuracy">0%</strong></div>
+      </div>
+      <p class="result-note" id="resultNote">The wall is quiet again. Nice tuning.</p>
+      <div class="result-actions">
+        <button class="btn btn-solid" id="playAgainBtn" type="button">PLAY AGAIN</button>
+        <button class="btn btn-ghost" id="backToWallBtn" type="button">BACK TO WALL</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <noscript>
+    <div class="noscript">TVGRID needs JavaScript to tune the wall.</div>
+  </noscript>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
