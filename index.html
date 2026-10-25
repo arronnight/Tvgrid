@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tvgrid — Live TV</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">TVGRID <span class="badge">LIVE</span></div>
+    <div class="now-playing" id="nowPlaying">—</div>
+    <div class="controls">
+      <span class="ch-count" id="channelCount">70 CHANNELS</span>
+      <button id="premiumBtn" class="premium-btn">Premium</button>
+      <button id="epgToggle">TV Guide</button>
+      <button id="geoBtn">Detect Location</button>
+    </div>
+  </header>
+  <main class="main">
+    <aside class="sidebar">
+      <input id="search" type="search" placeholder="Search channels…">
+      <div class="groups" id="groups"></div>
+      <ul class="channel-list" id="channelList"></ul>
+    </aside>
+    <section class="player-area">
+      <div class="player-frame" id="playerMount">
+        <div class="player-overlay" id="playerOverlay">Select a channel</div>
+      </div>
+      <div class="meta">
+        <h2 id="channelTitle">—</h2>
+        <p id="channelDesc">—</p>
+        <a id="openTab" href="#" target="_blank" rel="noopener">Open source page</a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="epg-modal" id="epgModal">
+  <div class="epg-shell">
+    <div class="epg-top">
+      <div>
+        <h2>TV Guide</h2>
+        <span class="epg-range" id="epgRange">—</span>
+      </div>
+      <button id="epgClose">Close</button>
+    </div>
+    <div class="epg-scroll" id="epgScroll">
+      <div class="epg-header">
+        <div class="epg-corner">CHANNEL</div>
+        <div class="epg-timebar" id="epgTimebar"></div>
+      </div>
+      <div class="epg-rows" id="epgRows"></div>
+    </div>
+  </div>
+</div>
+
+<script src="vendor/flv.min.js"></script>
+<script src="vendor/hls.min.js"></script>
+<script src="channels.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
