@@ -1,0 +1,7 @@
+<!doctype html><html><body>
+<video id="v" muted autoplay playsinline controls style="width:640px;background:#000"></video>
+<script>
+const url = new URLSearchParams(location.search).get('url');
+const v = document.getElementById('v'); v.src = url; v.play().catch(e=>console.warn(e));
+window.__status = () => ({ready:v.readyState, t:v.currentTime, err:v.error && v.error.message, src:v.currentSrc});
+</script></body></html>
