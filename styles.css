@@ -7,7 +7,7 @@ body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--
 .badge{background:var(--accent);color:#000;padding:2px 6px;border-radius:4px;font-size:11px;margin-left:6px}
 .now-playing{flex:1;color:var(--muted);font-size:14px}
 .controls button{background:#1b2330;color:var(--text);border:1px solid var(--border);padding:6px 10px;border-radius:6px;cursor:pointer;margin-left:6px}
-.main{display:grid;grid-template-columns:260px 1fr 320px;flex:1;overflow:hidden}
+.main{display:grid;grid-template-columns:260px 1fr 400px;flex:1;overflow:hidden}
 .sidebar{background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
 #search{margin:10px;padding:8px;border-radius:6px;border:1px solid var(--border);background:#0a0e14;color:var(--text)}
 .groups{display:flex;flex-wrap:wrap;gap:4px;padding:0 10px 10px}
@@ -16,6 +16,11 @@ body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--
 .channel-list li{display:grid;grid-template-columns:32px 1fr;grid-template-rows:auto auto;gap:2px 8px;padding:8px 10px;border-bottom:1px solid var(--border);cursor:pointer}
 .channel-list li:hover{background:#1b2330}
 .channel-list li.active{background:#2a1f1a;border-left:3px solid var(--accent)}
+.channel-list li.premium .ch-num{color:#ffd166}
+.channel-list li.premium .ch-name{color:#ffe9b0}
+.epg-row.premium .epg-num{color:#ffd166}
+.epg-row.premium .epg-name{color:#ffe9b0}
+.controls button.on{background:var(--accent);color:#000;border-color:var(--accent)}
 .ch-num{font-weight:700;color:var(--accent)}
 .ch-name{font-size:13px}
 .ch-cat{grid-column:2;font-size:11px;color:var(--muted)}
@@ -28,7 +33,7 @@ body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--
 .meta a{color:var(--accent)}
 .epg{background:var(--panel);border-left:1px solid var(--border);overflow:auto;padding:10px;display:none}
 .epg.open{display:block}
-.epg-row{display:grid;grid-template-columns:32px 1fr 1fr auto;gap:6px;padding:6px;border-bottom:1px solid var(--border);cursor:pointer;font-size:12px}
+.epg-row{display:grid;grid-template-columns:34px 1.1fr 1.4fr auto;gap:6px;padding:6px;border-bottom:1px solid var(--border);cursor:pointer;font-size:12px}
 .epg-row.active{background:#2a1f1a}
 .epg-num{color:var(--accent);font-weight:700}
 .epg-name{font-weight:600}
