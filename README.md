@@ -15,5 +15,5 @@
 - 🐛 [Report an issue](https://github.com/arronnight/Tvgrid/issues).
 - 👤 [Explore the creator's projects](https://omgithub.com/arronnight).
 - 🌍 [Create with OMGithub](https://omgithub.com).
-- 🧬 [Explore the remix source](https://github.com/arronnight/Tvgrid).
+- 🧬 [Explore the remix source](https://github.com/arronnight/Tvgrid/tree/fd3195484e1b74a453d8352a1495f877a8e044e7).
 <!-- omgithub:readme:end -->
