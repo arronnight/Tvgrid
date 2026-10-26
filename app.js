@@ -2,32 +2,32 @@ const SPELUNKR_BASE = "https://jbuopkuluyfjwgsrigry.supabase.co/storage/v1/objec
 const ARCHIVE_BASE = "https://archive.org/download/";
 const BASE_START = Date.parse("2024-01-01T00:00:00Z");
 
-const LOCAL_CONTENT = [
-  ["Retro Local News", "Local news broadcasts from the 90s and 2000s"],
-  ["Retro Local News 2", "More local news broadcasts from the 90s and 2000s"],
-  ["Retro Local Weather", "Local weather and community updates"],
-  ["Retro Local Sports", "Local sports and school broadcasts"],
-  ["Community Access", "Public access television from the 90s and 2000s"],
-  ["Local Government", "City council and public meetings"],
-  ["Local Events", "Town events and community gatherings"],
-  ["Local History", "Regional history and stories"],
-  ["Local Culture", "Local arts, music and culture"],
-  ["Local Voices", "Community voices and interviews"]
+const LOCAL_SECTIONS = [
+  { key: "news", name: "Local News", desc: "Retro newscasts from the 90s and 2000s" },
+  { key: "sports", name: "Local Sports", desc: "Local games, teams and sports broadcasts" },
+  { key: "community", name: "Community Access", desc: "Public access and neighborhood voices" },
+  { key: "government", name: "City Council", desc: "Local government, hearings and public meetings" },
+  { key: "events", name: "Local Events", desc: "Parades, festivals, rallies and local events" },
+  { key: "life", name: "Neighborhood", desc: "People, places and life around the city" },
+  { key: "music", name: "Local Music", desc: "Local bands, concerts and music performances" },
+  { key: "history", name: "Local History", desc: "Local history, museums and oral histories" },
+  { key: "culture", name: "Local Culture", desc: "Local arts, theater, dance and culture" },
+  { key: "voices", name: "Local Voices", desc: "Interviews, conversations and community voices" }
 ];
 
 const LOCAL_NEWS_FALLBACK = [
-  "wbrtvmi-WBRW_News_September_23_2009_Pt._2",
-  "wbrtvmi-2009_News_July_15_WBRW",
-  "wbrtvmi-2009_News_July_15_Pt2",
-  "cutvqc-ACSioN_Network_News_Episode_1_-_Part_1",
-  "cutvqc-ACSioN_Network_News_Episode_1_-_Part_2",
-  "copdca-Palmdale_-_ALPR_Press_Conference_Feb._22_2008",
-  "copdca-Backdrop_Palmdale_10_-_Segment_4",
-  "copdca-Backdrop_Palmdale_10_-_Segment_5",
-  "vctv7bc-Valemount_Live_Episode_2_Part_3",
-  "vctv7bc-Valemount_Live_Episode_1_Part_2",
-  "bc18ma-Barnstable_Today_08_07_2009_10Min",
-  "covtx-Nov_23_2009_News_Break"
+  "wbbm-080194-10pm-r",
+  "wmaq-080194-6pm",
+  "wgn-news-at-noon-oct-31-2002-x-264",
+  "kron-071692-11pm",
+  "kgo-071692-11pm",
+  "kpix-071692-10pm",
+  "kvue-092791-6pm",
+  "whdh-112092-530pm",
+  "wcbs-112692-11pm",
+  "ktvu-channel-2-news-10-pm-1999",
+  "newswhdhboston19950508",
+  "newscbs4wbztvboston20061119"
 ];
 
 let standardChannels = window.CHANNELS.slice();
@@ -64,13 +64,17 @@ function hideOverlay() {
   overlay.style.display = "none";
 }
 
-function clearPlayer() {
+function clearMedia() {
   if (cleanupPlayer) {
     try { cleanupPlayer(); } catch (e) {}
     cleanupPlayer = null;
   }
   mount.querySelectorAll("video, iframe, .player-msg").forEach(el => el.remove());
   hideOverlay();
+}
+
+function clearPlayer() {
+  clearMedia();
   activeSpelunkr = null;
 }
 
@@ -145,19 +149,43 @@ function mountHls(url) {
   }
 }
 
-function mountVideo(src, startAt, onEnded) {
+function mountVideo(src, startAt, onEnded, item) {
   hideOverlay();
   const v = makeVideo();
+  let finished = false;
+  let errTimer = null;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    if (onEnded) onEnded();
+  };
   v.addEventListener("loadedmetadata", () => {
-    if (startAt > 0 && isFinite(v.duration) && startAt < v.duration) {
-      try { v.currentTime = startAt; } catch (e) {}
+    const dur = v.duration;
+    if (isFinite(dur) && dur > 0 && item && Math.abs((item.duration || 0) - dur) > 1) {
+      item.duration = Math.round(dur * 1000) / 1000;
+    }
+    if (startAt > 0 && isFinite(dur) && dur > 0) {
+      if (startAt < dur - 0.5) {
+        try { v.currentTime = startAt; } catch (e) {}
+      } else {
+        finish();
+        return;
+      }
     }
     v.play().catch(() => {});
   });
-  v.addEventListener("ended", () => { if (onEnded) onEnded(); });
-  v.addEventListener("error", () => setOverlay("Video unavailable. Trying next…", true));
+  v.addEventListener("ended", finish);
+  v.addEventListener("error", () => {
+    setOverlay("Video unavailable. Trying next…", true);
+    errTimer = setTimeout(finish, 800);
+  });
   v.src = src;
-  cleanupPlayer = () => { v.pause(); v.removeAttribute("src"); v.load(); };
+  cleanupPlayer = () => {
+    clearTimeout(errTimer);
+    v.pause();
+    v.removeAttribute("src");
+    v.load();
+  };
 }
 
 function archiveUrl(item) {
@@ -188,7 +216,7 @@ function calcPlaylist(items, startMs, startIndex, now) {
 function loadMeta(ident) {
   if (archiveMetaCache[ident]) return Promise.resolve(archiveMetaCache[ident]);
   if (metaInflight[ident]) return metaInflight[ident];
-  metaInflight[ident] = fetch("https://archive.org/metadata/" + encodeURIComponent(ident), { cache: "no-store" })
+  metaInflight[ident] = fetch("https://archive.org/metadata/" + encodeURIComponent(ident), { cache: "no-store", signal: AbortSignal.timeout(12000) })
     .then(r => { if (!r.ok) throw new Error("metadata " + r.status); return r.json(); })
     .then(j => { archiveMetaCache[ident] = j; delete metaInflight[ident]; return j; })
     .catch(e => { delete metaInflight[ident]; throw e; });
@@ -241,8 +269,10 @@ function playPlaylistItem(c, index, offset) {
   const item = c.items[index % c.items.length];
   const url = archiveUrl(item);
   if (!url) { playPlaylistItem(c, index + 1, 0); return; }
+  clearMedia();
   document.getElementById("nowPlaying").textContent = `NOW: ${item.title}`;
-  mountVideo(url, offset || 0, () => playPlaylistItem(c, (index + 1) % c.items.length, 0));
+  renderEPG();
+  mountVideo(url, offset || 0, () => { if (current === c) playPlaylist(c); }, item);
 }
 
 function playPlaylist(c) {
@@ -305,6 +335,13 @@ async function playSpelunkr(c) {
   playSpelunkrItem(sched.index, sched.offset);
 }
 
+function playSpelunkrScheduled() {
+  if (!activeSpelunkr) return;
+  const { items, version } = activeSpelunkr;
+  const sched = calcPlaylist(items, version.epochMs, version.startIndex, Date.now());
+  if (sched) playSpelunkrItem(sched.index, sched.offset);
+}
+
 function playSpelunkrItem(index, offset) {
   if (!activeSpelunkr) return;
   const items = activeSpelunkr.items;
@@ -314,8 +351,10 @@ function playSpelunkrItem(index, offset) {
     playSpelunkrItem((index + 1) % items.length, 0);
     return;
   }
+  clearMedia();
   document.getElementById("nowPlaying").textContent = `NOW: ${item.title}`;
-  mountVideo(url, offset || 0, () => playSpelunkrItem((index + 1) % items.length, 0));
+  renderEPG();
+  mountVideo(url, offset || 0, playSpelunkrScheduled, item);
 }
 
 async function playChannel(c) {
@@ -351,63 +390,246 @@ async function playChannel(c) {
   }
 }
 
-function localName(i, city, region) {
-  const place = city || region || "Local";
-  const base = LOCAL_CONTENT[i][0];
-  return i === 0 ? `${place} Retro News` : `${place} ${base}`;
+const LOCAL_ALIASES = {
+  "new york": /\bnew york city\b|\bnyc\b|\bwnyw\b|\bwcbs\b|\bwnbc\b|\bwabc\b|\bwpix\b/i,
+  "washington": /\bwashington,?\s*d\.?c\.?\b|\bwashington dc\b|\bwusa\b|\bwjla\b|\bwrc\b|\bwttg\b/i
+};
+const LOCAL_BAD = /youtube|funny.?or.?die|promo|clip|start|partial|commercial|bumper|teaser|segment|conference|meeting|forum|lecture|awards|concert|game|sports|footage|fragment|ending|signoff|anthem|cnn|foxnews|msnbc|hln|cspan|world news|nightly news|good morning america|wgn america|infomercial|trailer|highlights|press conference|interview/i;
+const LOCAL_NEWS_OK = /\bnews|newscast|news at|eyewitness news|newsbreak|news break\b/i;
+const LOCAL_NOT_NEWS = /\b(newscast|news at|eyewitness|world news|nightly news|good morning|today show|newsbreak|news break)\b/i;
+const LOCAL_OTHER_PLACE = /\b(ithaca|lewisville|kalamazoo|iowa city|philippines|boston|new york|los angeles|san francisco|seattle|houston|dallas|atlanta|miami|denver|phoenix|philadelphia|detroit|cleveland|pittsburgh|st\.? louis|minneapolis|milwaukee|indianapolis|columbus|austin|portland|sacramento|orlando|tampa|baltimore|washington|montreal|toronto|london|paris|tokyo)\b/i;
+const LOCAL_MARKERS = /\b(vva|vietnam veterans|pilsen|cantv|community council|neighborhood|poetry center|free street|hyde park|access living|chicago|illinois|wgn|wbbm|wmaq|wls|wttw|wciu|wgn-tv|wbbm-tv|wmaq-tv)\b/i;
+
+const LOCAL_RULES = {
+  sports: /\b(sports?|football|basketball|baseball|hockey|boxing|bulls|cubs|white sox|blackhawks|bears|championship|nba|nfl|mlb|nhl|game\s+\d|vs\.?)\b/i,
+  music: /\b(music|concert|band|live at|performance|song|jazz|blues|hip[- ]?hop|rock|choir|orchestra|musical)\b/i,
+  history: /\b(history|historical|heritage|oral history|museum|archive|stories|remember|veterans)\b/i,
+  government: /\b(government|council|committee|board|town hall|hearing|tif|public meeting|alderman|legislative|policy|civic)\b/i,
+  events: /\b(festival|parade|fair|celebration|pride|memorial|veterans day|event|rally|march)\b/i,
+  culture: /\b(art|arts|culture|theater|theatre|dance|poetry|literature|gallery|film|photography|playwright)\b/i,
+  voices: /\b(interview|talk|voices|conversation|forum|discussion|oral history|stories)\b/i,
+  community: /\b(community|public access|cantv|access|neighborhood|pilsen|block club|local)\b/i,
+  life: /\b(life|people|neighborhood|food|family|health|school|youth|children|housing|work)\b/i
+};
+
+function escapeRegExp(v) {
+  return String(v).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function applyLocalDocs(docs, city, region) {
-  for (let i = 0; i < 10; i++) {
-    const ident = docs[i % docs.length].identifier;
-    const [name, desc] = LOCAL_CONTENT[i];
+function docHay(d) {
+  return `${d.title || ""} ${d.subject || ""} ${d.description || ""} ${d.identifier || ""}`.toLowerCase();
+}
+
+function isFullNewscast(d) {
+  const hay = docHay(d);
+  return LOCAL_NEWS_OK.test(hay) && !LOCAL_BAD.test(hay);
+}
+
+function isLocalDoc(d, city) {
+  if (!city) return false;
+  const cityRe = new RegExp(`\\b${escapeRegExp(city)}\\b`, "i");
+  const hay = docHay(d);
+  if (!cityRe.test(hay)) return false;
+  const strong = `${d.title || ""} ${d.subject || ""} ${d.identifier || ""}`.toLowerCase();
+  if (cityRe.test(strong)) return true;
+  if (/archive_cantv|cantv/.test(strong)) return true;
+  if (LOCAL_MARKERS.test(strong)) return true;
+  return false;
+}
+
+function isLocalNewscast(d, city) {
+  if (!city || !isFullNewscast(d) || !isLocalDoc(d, city)) return false;
+  const alias = LOCAL_ALIASES[city.toLowerCase()];
+  return !alias || alias.test(docHay(d));
+}
+
+function localName(i, city, local) {
+  const sec = LOCAL_SECTIONS[i];
+  if (local && city) return `${city} ${sec.name}`;
+  return i === 0 ? "Retro News" : `Retro News ${i + 1}`;
+}
+
+function localScore(d, rule) {
+  const t = String(d.title || "").toLowerCase();
+  const sub = String(d.subject || "").toLowerCase();
+  const desc = String(d.description || "").toLowerCase();
+  return (rule.test(t) ? 3 : 0) + (rule.test(sub) ? 2 : 0) + (rule.test(desc) ? 1 : 0);
+}
+
+function assignLocalSections(docs, city) {
+  const used = new Set();
+  const byKey = {};
+  const news = docs
+    .filter(d => isLocalNewscast(d, city))
+    .sort((a, b) => String(a.title || "").localeCompare(String(b.title || "")))
+    .slice(0, 4);
+  for (const d of news) used.add(d.identifier);
+  byKey.news = news;
+
+  const order = ["sports", "music", "history", "government", "events", "culture", "voices", "community", "life"];
+  for (const key of order) {
+    const rule = LOCAL_RULES[key];
+    const picks = docs
+      .filter(d => !used.has(d.identifier) && !LOCAL_NOT_NEWS.test(docHay(d)) && rule.test(docHay(d)))
+      .sort((a, b) => localScore(b, rule) - localScore(a, rule) || String(a.title || "").localeCompare(String(b.title || "")))
+      .slice(0, 4);
+    for (const d of picks) used.add(d.identifier);
+    byKey[key] = picks;
+  }
+
+  for (const key of ["community", "life"]) {
+    if (byKey[key].length >= 2) continue;
+    for (const d of docs) {
+      if (byKey[key].length >= 4) break;
+      if (used.has(d.identifier) || isLocalNewscast(d, city) || LOCAL_NOT_NEWS.test(docHay(d))) continue;
+      byKey[key].push(d);
+      used.add(d.identifier);
+    }
+  }
+
+  for (const key of order) {
+    if (byKey[key].length) continue;
+    for (const d of docs) {
+      if (used.has(d.identifier) || isLocalNewscast(d, city) || LOCAL_NOT_NEWS.test(docHay(d))) continue;
+      byKey[key] = [d];
+      used.add(d.identifier);
+      break;
+    }
+  }
+
+  const spare = docs.filter(d => !used.has(d.identifier)).slice(0, 40);
+  return { byKey, spare };
+}
+
+function applyLocalDocs(docs, city, local) {
+  const unique = [];
+  const seen = new Set();
+  for (const d of docs || []) {
+    if (!d || !d.identifier || seen.has(d.identifier)) continue;
+    seen.add(d.identifier);
+    unique.push(d);
+  }
+  if (!unique.length) unique.push(...LOCAL_NEWS_FALLBACK.map(id => ({ identifier: id, title: id.replace(/[-_]/g, " ") })));
+  for (let i = 0; i < LOCAL_SECTIONS.length; i++) {
+    const d = unique[i % unique.length];
+    const sec = LOCAL_SECTIONS[i];
     Object.assign(standardChannels[i], {
-      name: localName(i, city, region),
-      description: `${desc}${city ? " — " + city : ""}`,
+      name: localName(i, city, local),
+      description: local ? `${sec.desc}${city ? " — " + city : ""}` : "Retro newscasts from the 90s and 2000s",
       mode: "archive",
-      ident,
+      ident: d.identifier,
       items: null,
       startMs: null,
       startIndex: 0,
-      src: `https://archive.org/details/${ident}`,
-      category: "Local",
-      group: "local"
+      src: `https://archive.org/details/${d.identifier}`,
+      category: local ? "Local" : "News",
+      group: local ? "local" : "news",
+      local
     });
   }
 }
 
-async function buildLocalPlaylists(docs, city, region, token) {
-  const unique = [];
-  const seen = new Set();
-  for (const d of docs) {
-    if (!d || !d.identifier || seen.has(d.identifier)) continue;
-    seen.add(d.identifier);
-    unique.push(d);
-    if (unique.length >= 12) break;
+async function mapLimit(items, limit, fn) {
+  const out = new Array(items.length);
+  let next = 0;
+  const workers = Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (true) {
+      const i = next++;
+      if (i >= items.length) return;
+      out[i] = await fn(items[i], i);
+    }
+  });
+  await Promise.all(workers);
+  return out;
+}
+
+async function buildLocalPlaylists(byKey, city, local, token, spareDocs) {
+  const usedItemIds = new Set();
+  const usedTitles = new Set();
+  const itemsByKey = {};
+  const flat = [];
+  for (const [key, docs] of Object.entries(byKey)) {
+    for (const d of docs || []) flat.push({ key, d });
   }
-  const pool = [];
-  await Promise.all(unique.map(async d => {
-    try {
-      const meta = await loadMeta(d.identifier);
-      const items = itemsFromMeta(d.identifier, meta, 300);
-      if (items.length) pool.push(...items.slice(0, 3));
-    } catch (e) {}
-  }));
-  if (!pool.length) return false;
-  for (let i = 0; i < 10; i++) {
+  const fetched = await mapLimit(flat, 6, async x => {
+    try { return { ...x, meta: await loadMeta(x.d.identifier) }; } catch (e) { return { ...x, meta: null }; }
+  });
+  const selected = {};
+  for (const x of fetched) {
+    if (!selected[x.key]) selected[x.key] = [];
+    selected[x.key].push([x.d, x.meta]);
+  }
+
+  for (const [key, metas] of Object.entries(selected)) {
+    const items = [];
+    for (const [d, meta] of metas) {
+      if (!meta) continue;
+      const cands = itemsFromMeta(d.identifier, meta, 300);
+      if (!cands.length) continue;
+      cands.sort((a, b) => b.duration - a.duration);
+      const item = cands.find(x => !usedItemIds.has(x.id) && !usedTitles.has(String(x.title).toLowerCase().trim()));
+      if (!item) continue;
+      usedItemIds.add(item.id);
+      usedTitles.add(String(item.title).toLowerCase().trim());
+      items.push(item);
+    }
+    itemsByKey[key] = items;
+  }
+
+  for (const sec of LOCAL_SECTIONS) {
+    if ((itemsByKey[sec.key] || []).length) continue;
+    for (const d of spareDocs || []) {
+      if (!d || !d.identifier) continue;
+      try {
+        const meta = await loadMeta(d.identifier);
+        const cands = itemsFromMeta(d.identifier, meta, 300);
+        if (!cands.length) continue;
+        cands.sort((a, b) => b.duration - a.duration);
+        const item = cands.find(x => !usedItemIds.has(x.id) && !usedTitles.has(String(x.title).toLowerCase().trim()));
+        if (!item) continue;
+        usedItemIds.add(item.id);
+        usedTitles.add(String(item.title).toLowerCase().trim());
+        itemsByKey[sec.key] = [item];
+        break;
+      } catch (e) {}
+    }
+  }
+
+  let any = false;
+  for (let i = 0; i < LOCAL_SECTIONS.length; i++) {
+    const sec = LOCAL_SECTIONS[i];
+    const items = itemsByKey[sec.key] || [];
     const c = standardChannels[i];
-    c.mode = "playlist";
-    c.items = pool;
-    c.startMs = BASE_START + i * 7 * 3600000;
-    c.startIndex = (i * 3) % pool.length;
-    c.name = localName(i, city, region);
-    c.src = `https://archive.org/details/${c.ident}`;
+    c.name = localName(i, city, local);
+    c.description = `${sec.desc}${local && city ? " — " + city : ""}`;
+    c.category = local ? "Local" : "News";
+    c.group = local ? "local" : "news";
+    c.local = local;
+    if (items.length) {
+      any = true;
+      c.mode = "playlist";
+      c.items = items;
+      c.startMs = BASE_START + i * 7 * 3600000;
+      c.startIndex = (i * 3) % items.length;
+      c.ident = items[0].id;
+      c.src = `https://archive.org/details/${items[0].id}`;
+    } else {
+      c.mode = "archive";
+      c.items = null;
+      c.startMs = null;
+      c.startIndex = 0;
+      const d = (spareDocs || [])[i];
+      if (d) {
+        c.ident = d.identifier;
+        c.src = `https://archive.org/details/${d.identifier}`;
+      }
+    }
   }
   if (token === playToken) {
     renderEPG();
-    if (current && current.group === "local" && current.mode === "playlist") playPlaylist(current);
+    if (current && current.local && current.mode === "playlist") playPlaylist(current);
   }
-  return true;
+  return any;
 }
 
 async function detectGeo() {
@@ -421,35 +643,56 @@ async function detectGeo() {
   } catch (e) {}
   document.getElementById("geoBtn").textContent = `Location: ${city ? city + ", " : ""}${code}`;
   const clean = v => String(v || "").replace(/["\\]/g, "").trim();
-  const isNews = d => /news|newscast|newsbreak|news break|today|update|report|weather|bulletin|brief/i.test(String(d.title || d.identifier || ""));
-  const search = async q => {
-    const u = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(q)}&fl%5B%5D=identifier&fl%5B%5D=title&rows=40&output=json`;
+  const search = async (q, rows = 60) => {
+    const u = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(q)}&fl%5B%5D=identifier&fl%5B%5D=title&fl%5B%5D=subject&fl%5B%5D=description&fl%5B%5D=date&rows=${rows}&output=json`;
     try {
-      const r = await fetch(u, { signal: AbortSignal.timeout(8000) });
+      const r = await fetch(u, { signal: AbortSignal.timeout(12000) });
       const j = await r.json();
       return (j.response && j.response.docs || []).filter(d => d.identifier);
     } catch (e) { return []; }
   };
-  let docs = [];
-  if (clean(city) || clean(region)) {
-    const q = `collection:community_media AND year:[1990 TO 2009] AND mediatype:movies AND language:(eng OR English) AND (title:("${clean(city)}") OR title:("${clean(region)}")) AND (title:(news) OR title:(newscast) OR subject:(news))`;
-    docs = (await search(q)).filter(isNews);
+  const fetchLocalDocs = async localCity => {
+    const cq = `(title:("${localCity}") OR subject:("${localCity}") OR description:("${localCity}") OR identifier:("${localCity}"))`;
+    const dateq = "date:[1990-01-01 TO 2009-12-31]";
+    const queries = [
+      [`collection:vhsnews AND ${dateq} AND mediatype:movies AND ${cq} AND (title:(news) OR subject:(newscast))`, 60],
+      [`(collection:vhsnews OR collection:community_media OR collection:opensource_movies OR collection:sports) AND ${dateq} AND mediatype:movies AND ${cq}`, 400]
+    ];
+    if (localCity.toLowerCase() === "chicago") {
+      queries.push([`collection:community_media AND ${dateq} AND mediatype:movies AND identifier:archive_cantv*`, 200]);
+    }
+    const batches = await Promise.all(queries.map(([q, rows]) => search(q, rows)));
+    const seen = new Set();
+    const docs = [];
+    for (const d of batches.flat()) {
+      if (!d || !d.identifier || seen.has(d.identifier) || !isLocalDoc(d, localCity)) continue;
+      seen.add(d.identifier);
+      docs.push(d);
+    }
+    return docs;
+  };
+
+  const localCity = clean(city);
+  let localDocs = [];
+  if (localCity) localDocs = await fetchLocalDocs(localCity);
+  const local = !!(localCity && localDocs.length >= 4);
+
+  if (local) {
+    const { byKey, spare } = assignLocalSections(localDocs, localCity);
+    renderGroups();
+    renderChannels();
+    renderEPG();
+    const ok = await buildLocalPlaylists(byKey, localCity, true, playToken, spare);
+    if (!ok) applyLocalDocs(localDocs, localCity, true);
+  } else {
+    let docs = [];
+    const q = `collection:vhsnews AND date:[1990-01-01 TO 2009-12-31] AND mediatype:movies AND (title:(news) OR subject:(newscast))`;
+    docs = (await search(q, 60)).filter(isFullNewscast);
+    if (!docs.length) docs = LOCAL_NEWS_FALLBACK.map(id => ({ identifier: id, title: id.replace(/[-_]/g, " ") }));
+    applyLocalDocs(docs, localCity, false);
   }
-  if (docs.length < 3) {
-    const q = `collection:community_media AND year:[1990 TO 2009] AND mediatype:movies AND language:(eng OR English) AND (title:(news) OR title:(newscast))`;
-    docs = (await search(q)).filter(isNews);
-  }
-  if (docs.length < 3) docs = LOCAL_NEWS_FALLBACK.map(id => ({ identifier: id, title: id.replace(/[-_]/g, " ") }));
-  docs.sort((a, b) => {
-    const an = /newscast|news|today|update|report|weather/i.test(a.title || "") ? 0 : 1;
-    const bn = /newscast|news|today|update|report|weather/i.test(b.title || "") ? 0 : 1;
-    return an - bn;
-  });
-  applyLocalDocs(docs, city, region);
-  renderChannels();
-  renderEPG();
-  const ok = await buildLocalPlaylists(docs, city, region, playToken);
-  if (!ok) applyLocalDocs(docs, city, region);
+
+  renderGroups();
   renderChannels();
   renderEPG();
 }
@@ -500,7 +743,7 @@ function programFor(c, now) {
   if (c.mode === "playlist" && c.items && c.items.length) {
     const s = calcPlaylist(c.items, c.startMs, c.startIndex, now);
     if (s) {
-      const start = now - s.offset;
+      const start = now - s.offset * 1000;
       return { title: s.item.title, start: new Date(start), end: new Date(start + s.item.duration * 1000) };
     }
   }
@@ -508,7 +751,7 @@ function programFor(c, now) {
     if (c.items && c.items.length) {
       const s = calcPlaylist(c.items, c.startMs, c.startIndex, now);
       if (s) {
-        const start = now - s.offset;
+        const start = now - s.offset * 1000;
         return { title: s.item.title, start: new Date(start), end: new Date(start + s.item.duration * 1000) };
       }
     }
@@ -522,7 +765,7 @@ function programFor(c, now) {
       if (manifest) {
         const s = calcPlaylist(spelunkrItems(manifest), ver.epochMs, ver.startIndex, now);
         if (s) {
-          const start = now - s.offset;
+          const start = now - s.offset * 1000;
           return { title: s.item.title, start: new Date(start), end: new Date(start + s.item.duration * 1000) };
         }
       }
