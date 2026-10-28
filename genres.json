@@ -1,0 +1,457 @@
+[
+  {
+    "id": "genre-retro-sitcoms",
+    "name": "Retro Sitcoms",
+    "description": "Classic sitcoms from the 70s through the 90s.",
+    "items": [
+      {
+        "id": "the-ghost-busters-1975",
+        "file": "The Ghost Busters (1975) Live Action Episode 01 The Maltese Monkey.mp4",
+        "duration": 1331.36,
+        "title": "Ghost Busters",
+        "year": "1975"
+      },
+      {
+        "id": "sydney-1990-sitcom",
+        "file": "Sydney (1990 sitcom) - Episode 02 -\u201cPromises, Promises\u201d (March 28, 1990) - youtuber 'Have You Seen This'.mp4",
+        "duration": 1436.93,
+        "title": "Sydney (1990) sitcom",
+        "year": "1990"
+      },
+      {
+        "id": "hi-honey-im-home",
+        "file": "Hi Honey , I'm Home #1 S1E1 - the retro depot.mp4",
+        "duration": 1829.99,
+        "title": "Hi Honey, I'm Home! (1992-93) sitcom, Julie Benz",
+        "year": "1991"
+      }
+    ]
+  },
+  {
+    "id": "genre-comedy-vault",
+    "name": "Comedy Vault",
+    "description": "British and American comedy series.",
+    "items": [
+      {
+        "id": "Last-of-the-Summer-Wine-Series-5",
+        "file": "And a Dewhurst Up a Fir Tree Christmas Special 1979.S00Ep02.mp4",
+        "duration": 1842.22,
+        "title": "Last of the Summer Wine",
+        "year": "1979"
+      },
+      {
+        "id": "the-peter-principle-series",
+        "file": "The Peter Principle S02E01 Un Homme Et Une Femme - yt Audie Lilla.mp4",
+        "duration": 3294.45,
+        "title": "The Boss / The Peter Principle (1995-2000) UK sitcom",
+        "year": "1995"
+      },
+      {
+        "id": "sibs-1991",
+        "file": "sibs (1991) ep.01 Sibs - S01E01 - The Naked and the Damned - Marsellus Gecko yt.mp4",
+        "duration": 1531.9,
+        "title": "Sibs (1991) sitcom ft Jami Gertz and Margaret Colin",
+        "year": "1991"
+      },
+      {
+        "id": "partners-1995-96",
+        "file": "+ Partners (1995) S01 E01 - The Viewing Room.mp4",
+        "duration": 1309.04,
+        "title": "Partners (1995\u201396) sitcom - Jon Cryer, Tate Donovan",
+        "year": "1995"
+      }
+    ]
+  },
+  {
+    "id": "genre-sketch-variety",
+    "name": "Sketch & Variety",
+    "description": "Sketch comedy, variety specials and funny people.",
+    "items": [
+      {
+        "id": "TheMartinShortShowEp.2TheSteveMartinShow",
+        "file": "The-Martin-Short-Show-_Ep.-2_-The-Steve-Martin-Show_.mp4",
+        "duration": 1334.64,
+        "title": "Martin Short Show",
+        "year": "1992"
+      },
+      {
+        "id": "bob-hopes-cross-country-xmas-show-1991",
+        "file": "Bob Hopes Cross-Country Xmas Show - 1991.ia.mp4",
+        "duration": 2678.63,
+        "title": "Bob Hope Xmas",
+        "year": "1991"
+      },
+      {
+        "id": "americas-funniest-people-balancing-acts-1990",
+        "file": "Americas Funniest People - Big Winner 2 - 1990.ia.mp4",
+        "duration": 1469.07,
+        "title": "America's Funniest People",
+        "year": "1990"
+      }
+    ]
+  },
+  {
+    "id": "genre-family-comedy",
+    "name": "Family Comedy",
+    "description": "Family sitcoms and wholesome comedy.",
+    "items": [
+      {
+        "id": "the-new-leave-it-to-beaver-still-the-beaver-1984-1989",
+        "file": "The New Leave It to Beaver (Still the Beaver) [1984 - 1989]/S00E00 - Still the Beaver (1983 TV Movie).mp4",
+        "duration": 4983.72,
+        "title": "Leave It To Beaver",
+        "year": "1984"
+      },
+      {
+        "id": "swiss-family-robinson-1974",
+        "file": "04 Curse Of The Idol.mp4",
+        "duration": 1428.28,
+        "title": "Swiss Family Robinson",
+        "year": "1974"
+      },
+      {
+        "id": "family_dog",
+        "file": "Family Dog S01E00 Amazing Stories.mp4",
+        "duration": 1418.81,
+        "title": "Family Dog (1993) [Complete Series]",
+        "year": "1993"
+      }
+    ]
+  },
+  {
+    "id": "genre-classic-soaps",
+    "name": "Classic Soaps",
+    "description": "Daytime and prime-time serial drama.",
+    "items": [
+      {
+        "id": "all-my-children-may-8-1992-most",
+        "file": "All My Children- May 8, 1992 (most).ia.mp4",
+        "duration": 2322.41,
+        "title": "All My Children",
+        "year": "1992"
+      },
+      {
+        "id": "classic-emmerdale-1990.08.07.-vhsrip.-xvid.-1477.-robinhood-99",
+        "file": "Classic Emmerdale 1990.08.07.VHSRip.Xvid.(1477).Robinhood99.mp4",
+        "duration": 1408.44,
+        "title": "Emmerdale 7th August 1990",
+        "year": "1990"
+      },
+      {
+        "id": "coronation-street-1991-02-27-pdtv.-mpeg-ss",
+        "file": "CoronationStreet_1991-02-27_PDTV.MPEG-SS.ia.mp4",
+        "duration": 1392.93,
+        "title": "Coronation Street 27th February 1991",
+        "year": "1991"
+      }
+    ]
+  },
+  {
+    "id": "genre-sci-fi-theater",
+    "name": "Sci-Fi Theater",
+    "description": "Science fiction series and speculative television.",
+    "items": [
+      {
+        "id": "ArkIIEpisode1TheFlies1976",
+        "file": "Ark II - Episode 1 - The Flies (1976).mp4",
+        "duration": 1362.48,
+        "title": "Ark II",
+        "year": "1976"
+      },
+      {
+        "id": "episode-3-air-lock",
+        "file": "Episode 3 - Air Lock.ia.mp4",
+        "duration": 1463.46,
+        "title": "Doctor Who",
+        "year": "1965"
+      },
+      {
+        "id": "nowhere-man-1995-96",
+        "file": "Nowhere Man -  E01_25 Absolute Zero Full Episode.ia.mp4",
+        "duration": 4018.35,
+        "title": "Nowhere Man (1995-96) photographer hunted for negative - all 25 eps",
+        "year": "1995"
+      }
+    ]
+  },
+  {
+    "id": "genre-action-zone",
+    "name": "Action Zone",
+    "description": "Superheroes, action and adventure series.",
+    "items": [
+      {
+        "id": "the-amazing-spider-man-1977-complete-series_202301",
+        "file": "02x07 02x08 The Chinese Web.ia.mp4",
+        "duration": 5775.04,
+        "title": "Amazing Spider-Man",
+        "year": "1977"
+      },
+      {
+        "id": "rescue-77-s-01-e-03-a-bumpy-ride",
+        "file": "Rescue 77 S01E03 A Bumpy Ride.mp4",
+        "duration": 2611.14,
+        "title": "Rescue 77 S01E03 A Bumpy Ride",
+        "year": "1999"
+      },
+      {
+        "id": "she-wolf-of-london-complete-series-1990",
+        "file": "She Wolf of London - S01E13 - Voodoo Child (DVD).mp4",
+        "duration": 2838.87,
+        "title": "She Wolf of London - Complete Series 1990",
+        "year": "1990"
+      }
+    ]
+  },
+  {
+    "id": "genre-retro-drama",
+    "name": "Retro Drama",
+    "description": "Drama series and television movies.",
+    "items": [
+      {
+        "id": "zoe-duncan-jack-and-jane-complete-series",
+        "file": "Zoe, Duncan, Jack and Jane - 1x01 - Pilot.mp4",
+        "duration": 1416.0,
+        "title": "Zoe Duncan Jack Jane",
+        "year": "1999"
+      },
+      {
+        "id": "slap-maxwell-story-1.01",
+        "file": "Slap Maxwell Story - 1.05.mp4",
+        "duration": 1408.4,
+        "title": "Slap Maxwell",
+        "year": "1987"
+      },
+      {
+        "id": "due-south-1994-98",
+        "file": "Due South (1994\u201398) CA crime comedy-drama - 60 of 67/Due South (1994) S01E00 Due South Season 01 Episode 00 Pilot [Full Length] - 2 hrs.mp4",
+        "duration": 7466.1,
+        "title": "Due South (1994\u201398) CA crime comedy-drama",
+        "year": "1994"
+      }
+    ]
+  },
+  {
+    "id": "genre-kids-corner",
+    "name": "Kids Corner",
+    "description": "Children and family television.",
+    "items": [
+      {
+        "id": "honey-i-shrunk-the-kids-tv-show-season-1-episode-11-honey-youre-living-in-the-past",
+        "file": "histk-s01e11-honey-you-re-living-in-the-past.mp4",
+        "duration": 2505.0,
+        "title": "Honey I shrunk the kids TV Show Season 1 Episode 11 Honey, You're Living in the Past",
+        "year": "1997"
+      },
+      {
+        "id": "amazing-live-sea-monkeys-01",
+        "file": "Amazing Live Sea Monkeys - 01.mp4",
+        "duration": 1382.34,
+        "title": "The Amazing Live Sea-Monkeys - 01: Octopotamus R' Usamus",
+        "year": "1992"
+      },
+      {
+        "id": "hull-high-1990-musical-teen-comedy",
+        "file": "Hull High (1990) 1X02- 5.3.22 candypants.mp4",
+        "duration": 3478.07,
+        "title": "Hull High (1990) Musical teen comedy",
+        "year": "1990"
+      }
+    ]
+  },
+  {
+    "id": "genre-retro-game-shows",
+    "name": "Retro Game Shows",
+    "description": "Quiz, panel and game shows.",
+    "items": [
+      {
+        "id": "cluedo-1990",
+        "file": "Specials/Cluedo - Special S00E01 - Christmas Past, Christmas Present.mp4",
+        "duration": 2262.83,
+        "title": "Cluedo (1990)",
+        "year": "1990"
+      },
+      {
+        "id": "super-greed-may-12-2000",
+        "file": "2000-05-12 Greed [GSN].ia.mp4",
+        "duration": 3648.65,
+        "title": "Super Greed (May 12, 2000)",
+        "year": "2000"
+      },
+      {
+        "id": "TPIRJan1996",
+        "file": "videoplayback (1).mp4",
+        "duration": 2473.3,
+        "title": "The Price is Right: January 24, 1996",
+        "year": "1996"
+      }
+    ]
+  },
+  {
+    "id": "genre-talk-interviews",
+    "name": "Talk & Interviews",
+    "description": "Talk shows, interviews and celebrity conversations.",
+    "items": [
+      {
+        "id": "tape-0134-the-jackie-mason-show-from-july-20-1992",
+        "file": "The Jackie Mason Show (1992-07-20).mp4",
+        "duration": 3411.05,
+        "title": "Tape 0134: The Jackie Mason Show from July 20 1992",
+        "year": "1992"
+      },
+      {
+        "id": "the-oprah-winfrey-show-brokeback-mountain-cast-01.27.2006",
+        "file": "The Oprah Winfrey Show - Brokeback Mountain cast (01.27.2006) fix.mp4",
+        "duration": 1516.57,
+        "title": "The Oprah Winfrey Show - Brokeback Mountain Cast (01.27.2006)",
+        "year": "2006"
+      },
+      {
+        "id": "19981020CharltonHestonJodyPendarvisTheRoseanneShow",
+        "file": "1998-10-20 Charlton Heston, Jody Pendarvis - The Roseanne Show.mp4",
+        "duration": 2546.65,
+        "title": "The Roseanne Show - Charlton Heston, Jody Pendarvis, Ellen Ladowsky",
+        "year": "1998"
+      }
+    ]
+  },
+  {
+    "id": "genre-music-concerts",
+    "name": "Music & Concerts",
+    "description": "Live music, concerts and music television.",
+    "items": [
+      {
+        "id": "bjorklater",
+        "file": "BJORK_LIVE_TV_NTSC.mp4",
+        "duration": 2035.07,
+        "title": "Bj\u00f6rk: Later with Jools Holland (2003) - DVD Video",
+        "year": "2003"
+      },
+      {
+        "id": "ec24_20260126",
+        "file": "Eric Clapton 24 nights X265 VHS Decode 4-3.mp4",
+        "duration": 5503.12,
+        "title": "Eric Clapton - 24 Nights (1991) [VHS Decode RF Capture]",
+        "year": "1991"
+      },
+      {
+        "id": "daftendirektour97-alive97-daftpunk-live-at-mayan-theater",
+        "file": "DaftPunkMayan.ia.mp4",
+        "duration": 5267.05,
+        "title": "Daftendirektour '97 / Alive '97 - Daft Punk Live at Mayan Theater",
+        "year": "1997"
+      }
+    ]
+  },
+  {
+    "id": "genre-sports-archive",
+    "name": "Sports Archive",
+    "description": "Classic sports broadcasts and highlights.",
+    "items": [
+      {
+        "id": "1952-RollerDerby-TheJoltersVsTheChiefs_105",
+        "file": "1952-RollerDerby-TheJoltersVsTheWesterners.mp4",
+        "duration": 1404.4,
+        "title": "Roller Derby",
+        "year": "1952"
+      },
+      {
+        "id": "Hockey_Game_SensTrn_McLovins_Vs_Pembroke_Final_14Dec2008",
+        "file": "SSA50041_512kb.mp4",
+        "duration": 1169.4,
+        "title": "Hockey Game Sensplex Tournament McLovins Vs Pembroke Final 14 Dec 2008",
+        "year": "2008"
+      },
+      {
+        "id": "Pickup_Hockey_OutDoor_Dell_Arena_25Jan2007",
+        "file": "SSA50913_512kb.mp4",
+        "duration": 2610.73,
+        "title": "Pickup Hockey On OutDoor Dell Arena 25 Jan 2007",
+        "year": "2007"
+      }
+    ]
+  },
+  {
+    "id": "genre-retro-docs",
+    "name": "Retro Docs",
+    "description": "Documentary series and specials.",
+    "items": [
+      {
+        "id": "the_river_ran_red_dvd",
+        "file": "UNDEFINED.mp4",
+        "duration": 3477.14,
+        "title": "\"The River Ran Red\" documentary DVD",
+        "year": "1993"
+      },
+      {
+        "id": "dammit-jim-im-only-a-documentary",
+        "file": "Dammit Jim! I'm Only A Documentary!.mp4",
+        "duration": 1369.47,
+        "title": "Dammit Jim! I'm Only A Documentary!",
+        "year": "1993"
+      },
+      {
+        "id": "wildlife-on-one-s18e06-enter-the-dragons-1991-x264-vhsrf",
+        "file": "Wildlife.on.One.S18E06.Enter.the.Dragons.1991.x264.AAC.VHSrf-SkinnyV.mp4",
+        "duration": 1749.42,
+        "title": "Wildlife on One - S18E06 - Enter the Dragons (Februrary 4th 1991)",
+        "year": "1991"
+      }
+    ]
+  },
+  {
+    "id": "genre-retro-history",
+    "name": "Retro History",
+    "description": "History, society and oral-history programs.",
+    "items": [
+      {
+        "id": "calajhs_001288",
+        "file": "calajhs_001288_access.mp4",
+        "duration": 2122.41,
+        "title": "Oral History, Annette Shapiro and Rosella Familian, 1991",
+        "year": "1991"
+      },
+      {
+        "id": "cadipl_000023",
+        "file": "cadipl_000023_access.HD.mp4",
+        "duration": 3208.26,
+        "title": "Otto Rohwer Oral History",
+        "year": "1998"
+      },
+      {
+        "id": "the-great-war-by-air-and-by-sea",
+        "file": "The Great War By Air and By Sea (Part 1).mp4",
+        "duration": 1563.56,
+        "title": "The Great War: By Air And By Sea",
+        "year": "1990"
+      }
+    ]
+  },
+  {
+    "id": "genre-movie-night",
+    "name": "Movie Night",
+    "description": "Feature films from the 90s and 2000s.",
+    "items": [
+      {
+        "id": "darkman-trilogy-1990",
+        "file": "Darkman - 01 1990.mp4",
+        "duration": 5724.14,
+        "title": "Darkman Trilogy 1990",
+        "year": "1990"
+      },
+      {
+        "id": "brotherhood-of-the-wolf",
+        "file": "Brotherhood Of The Wolf.ia.mp4",
+        "duration": 9008.58,
+        "title": "Brotherhood Of The Wolf (2001)",
+        "year": "2001"
+      },
+      {
+        "id": "the-invincible-ironman",
+        "file": "The Invincible Ironman.mp4",
+        "duration": 4984.03,
+        "title": "The Invincible Ironman",
+        "year": "2007"
+      }
+    ]
+  }
+]

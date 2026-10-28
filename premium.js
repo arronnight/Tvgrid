@@ -527,13 +527,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 0,
     "items": [
       {
-        "id": "honey-i-shrunk-the-kids-tv-show-season-1-episode-11-honey-youre-living-in-the-past",
-        "file": "histk-s01e11-honey-you-re-living-in-the-past.mp4",
-        "duration": 2505.0,
-        "title": "Honey I shrunk the kids TV Show Season 1 Episode 11 Honey, You're Living in the Past",
-        "year": "1997"
-      },
-      {
         "id": "honey-i-shrunk-the-kids-tv-show-season-1-episode-4-honey-were-stuck-in-the-70s",
         "file": "Honey, I Shrunk the Kids(Honey, We're Stuck in the 70's)Episode 4-Vv7vJ2GlVUc.mp4",
         "duration": 2601.98,
@@ -612,20 +605,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 3,
     "items": [
       {
-        "id": "family_dog",
-        "file": "Family Dog S01E00 Amazing Stories.mp4",
-        "duration": 1418.81,
-        "title": "Family Dog (1993) [Complete Series]",
-        "year": "1993"
-      },
-      {
-        "id": "amazing-live-sea-monkeys-01",
-        "file": "Amazing Live Sea Monkeys - 01.mp4",
-        "duration": 1382.34,
-        "title": "The Amazing Live Sea-Monkeys - 01: Octopotamus R' Usamus",
-        "year": "1992"
-      },
-      {
         "id": "amazing-live-sea-monkeys-02",
         "file": "Amazing Live Sea Monkeys - 02.mp4",
         "duration": 1383.17,
@@ -697,13 +676,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 4,
     "items": [
       {
-        "id": "sydney-1990-sitcom",
-        "file": "Sydney (1990 sitcom) - Episode 02 -\u201cPromises, Promises\u201d (March 28, 1990) - youtuber 'Have You Seen This'.mp4",
-        "duration": 1436.93,
-        "title": "Sydney (1990) sitcom",
-        "year": "1990"
-      },
-      {
         "id": "top-of-the-heap-1991-sitcom",
         "file": "102 The Agony And The Agony.mp4",
         "duration": 1377.0,
@@ -715,13 +687,6 @@ window.PREMIUM_CHANNELS = [
         "file": "Cybill-S01E02-how.can.i.call.you.my.ex-husbands.if.you.wont.go.away.ia.mp4",
         "duration": 1388.69,
         "title": "Cybill (1995) Season 1 S01 Sitcom",
-        "year": "1995"
-      },
-      {
-        "id": "the-peter-principle-series",
-        "file": "The Peter Principle S02E01 Un Homme Et Une Femme - yt Audie Lilla.mp4",
-        "duration": 3294.45,
-        "title": "The Boss / The Peter Principle (1995-2000) UK sitcom",
         "year": "1995"
       },
       {
@@ -767,13 +732,6 @@ window.PREMIUM_CHANNELS = [
     "startMs": 1704142860000,
     "startIndex": 7,
     "items": [
-      {
-        "id": "hi-honey-im-home",
-        "file": "Hi Honey , I'm Home #1 S1E1 - the retro depot.mp4",
-        "duration": 1829.99,
-        "title": "Hi Honey, I'm Home! (1992-93) sitcom, Julie Benz",
-        "year": "1991"
-      },
       {
         "id": "rhythm-blues-1992",
         "file": "07 Rhythm & Blues 1992 Sitcom...  (#7).. Your Sister Wears Combat Boots (UNAIRED) -Cinema Unlimited.mp4",
@@ -1031,25 +989,11 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 2,
     "items": [
       {
-        "id": "sibs-1991",
-        "file": "sibs (1991) ep.01 Sibs - S01E01 - The Naked and the Damned - Marsellus Gecko yt.mp4",
-        "duration": 1531.9,
-        "title": "Sibs (1991) sitcom ft Jami Gertz and Margaret Colin",
-        "year": "1991"
-      },
-      {
         "id": "minor-adjustments",
         "file": "x 1x06 The Ex-Files VHS WOC - 'Martin Minor Adjustments Tape1995\u29f81996' - yt Texas TV Time - writers phil + tom.mp4",
         "duration": 2111.76,
         "title": "Minor Adjustments (1994\u201395) sitcom -Raven's Dad + Sara Rue",
         "year": "1994"
-      },
-      {
-        "id": "partners-1995-96",
-        "file": "+ Partners (1995) S01 E01 - The Viewing Room.mp4",
-        "duration": 1309.04,
-        "title": "Partners (1995\u201396) sitcom - Jon Cryer, Tate Donovan",
-        "year": "1995"
       },
       {
         "id": "nick-freno-licensed-teacher-1996-98-sitcom",
@@ -1094,13 +1038,6 @@ window.PREMIUM_CHANNELS = [
     "startMs": 1704171960000,
     "startIndex": 4,
     "items": [
-      {
-        "id": "classic-emmerdale-1990.08.07.-vhsrip.-xvid.-1477.-robinhood-99",
-        "file": "Classic Emmerdale 1990.08.07.VHSRip.Xvid.(1477).Robinhood99.mp4",
-        "duration": 1408.44,
-        "title": "Emmerdale 7th August 1990",
-        "year": "1990"
-      },
       {
         "id": "classic-emmerdale-1991.12.12.-vhsrip.-xvid.-1617.-robinhood-99",
         "file": "Classic Emmerdale 1991.12.12.VHSRip.Xvid.(1617).Robinhood99.mp4",
@@ -1179,13 +1116,6 @@ window.PREMIUM_CHANNELS = [
     "startMs": 1704177780000,
     "startIndex": 7,
     "items": [
-      {
-        "id": "coronation-street-1991-02-27-pdtv.-mpeg-ss",
-        "file": "CoronationStreet_1991-02-27_PDTV.MPEG-SS.ia.mp4",
-        "duration": 1392.93,
-        "title": "Coronation Street 27th February 1991",
-        "year": "1991"
-      },
       {
         "id": "classic-emmerdale-1991.11.14.-vhsrip.-xvid.-1609.-robinhood-99",
         "file": "Classic Emmerdale 1991.11.14.VHSRip.Xvid.(1609).Robinhood99.mp4",
@@ -1690,13 +1620,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 5,
     "items": [
       {
-        "id": "hull-high-1990-musical-teen-comedy",
-        "file": "Hull High (1990) 1X02- 5.3.22 candypants.mp4",
-        "duration": 3478.07,
-        "title": "Hull High (1990) Musical teen comedy",
-        "year": "1990"
-      },
-      {
         "id": "club-connect-teen-activism-s04e16",
         "file": "Club Connect - S04E16 - Teen Activism.ia.mp4",
         "duration": 1722.29,
@@ -1780,13 +1703,6 @@ window.PREMIUM_CHANNELS = [
         "duration": 1765.78,
         "title": "Episode 1 Science Fiction Fantasy Films SD",
         "year": "1990"
-      },
-      {
-        "id": "nowhere-man-1995-96",
-        "file": "Nowhere Man -  E01_25 Absolute Zero Full Episode.ia.mp4",
-        "duration": 4018.35,
-        "title": "Nowhere Man (1995-96) photographer hunted for negative - all 25 eps",
-        "year": "1995"
       },
       {
         "id": "farscape-s-01-e-03-exodus-from-genesis-may-14-1999-australia-and-united-states_202602",
@@ -1926,13 +1842,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 0,
     "items": [
       {
-        "id": "rescue-77-s-01-e-03-a-bumpy-ride",
-        "file": "Rescue 77 S01E03 A Bumpy Ride.mp4",
-        "duration": 2611.14,
-        "title": "Rescue 77 S01E03 A Bumpy Ride",
-        "year": "1999"
-      },
-      {
         "id": "lightning-force-6",
         "file": "Lightning Force - 6.mp4",
         "duration": 1251.4,
@@ -1975,13 +1884,6 @@ window.PREMIUM_CHANNELS = [
     "startMs": 1704247620000,
     "startIndex": 3,
     "items": [
-      {
-        "id": "she-wolf-of-london-complete-series-1990",
-        "file": "She Wolf of London - S01E13 - Voodoo Child (DVD).mp4",
-        "duration": 2838.87,
-        "title": "She Wolf of London - Complete Series 1990",
-        "year": "1990"
-      },
       {
         "id": "legend-complete-series-1995",
         "file": "Legend S01E01 Birth of a Legend.mp4",
@@ -2154,13 +2056,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 2,
     "items": [
       {
-        "id": "due-south-1994-98",
-        "file": "Due South (1994\u201398) CA crime comedy-drama - 60 of 67/Due South (1994) S01E00 Due South Season 01 Episode 00 Pilot [Full Length] - 2 hrs.mp4",
-        "duration": 7466.1,
-        "title": "Due South (1994\u201398) CA crime comedy-drama",
-        "year": "1994"
-      },
-      {
         "id": "413-hope-st-1997",
         "file": "413 Hope St (1997 \u201398) - 4 of 10 eps/413 Hope St -9 - Thanksgiving - 44 min - youtuber 'better call'.mp4",
         "duration": 2685.38,
@@ -2253,13 +2148,6 @@ window.PREMIUM_CHANNELS = [
         "year": "1990"
       },
       {
-        "id": "cluedo-1990",
-        "file": "Specials/Cluedo - Special S00E01 - Christmas Past, Christmas Present.mp4",
-        "duration": 2262.83,
-        "title": "Cluedo (1990)",
-        "year": "1990"
-      },
-      {
         "id": "david-marcia-tom-1091480",
         "file": "DavidMarciaTom 1091480.mp4",
         "duration": 1748.25,
@@ -2343,13 +2231,6 @@ window.PREMIUM_CHANNELS = [
         "duration": 1238.37,
         "title": "Family Feud (January 19, 2007 | S8 E101): Sim/Leonard",
         "year": "2007"
-      },
-      {
-        "id": "super-greed-may-12-2000",
-        "file": "2000-05-12 Greed [GSN].ia.mp4",
-        "duration": 3648.65,
-        "title": "Super Greed (May 12, 2000)",
-        "year": "2000"
       },
       {
         "id": "15-to-1-15th-dec-2001",
@@ -2470,13 +2351,6 @@ window.PREMIUM_CHANNELS = [
         "duration": 1252.74,
         "title": "Wheel of Fortune Episode #2314 (May 18, 1995)",
         "year": "1995"
-      },
-      {
-        "id": "TPIRJan1996",
-        "file": "videoplayback (1).mp4",
-        "duration": 2473.3,
-        "title": "The Price is Right: January 24, 1996",
-        "year": "1996"
       }
     ]
   },
@@ -2493,13 +2367,6 @@ window.PREMIUM_CHANNELS = [
     "startMs": 1704288360000,
     "startIndex": 4,
     "items": [
-      {
-        "id": "tape-0134-the-jackie-mason-show-from-july-20-1992",
-        "file": "The Jackie Mason Show (1992-07-20).mp4",
-        "duration": 3411.05,
-        "title": "Tape 0134: The Jackie Mason Show from July 20 1992",
-        "year": "1992"
-      },
       {
         "id": "19980921DebbieReynoldsDominickDunneNoraDunnTheRoseanneShow",
         "file": "1998-09-21 Debbie Reynolds, Dominick Dunne, Nora Dunn  - The Roseanne Show.mp4",
@@ -2520,13 +2387,6 @@ window.PREMIUM_CHANNELS = [
         "duration": 1956.82,
         "title": "The Roseanne Show - Gregory Hines, Wendy Liebman (1999)",
         "year": "1999"
-      },
-      {
-        "id": "the-oprah-winfrey-show-brokeback-mountain-cast-01.27.2006",
-        "file": "The Oprah Winfrey Show - Brokeback Mountain cast (01.27.2006) fix.mp4",
-        "duration": 1516.57,
-        "title": "The Oprah Winfrey Show - Brokeback Mountain Cast (01.27.2006)",
-        "year": "2006"
       },
       {
         "id": "Jubi_Show_10-6-9_part_5",
@@ -2578,13 +2438,6 @@ window.PREMIUM_CHANNELS = [
     "startMs": 1704294180000,
     "startIndex": 7,
     "items": [
-      {
-        "id": "19981020CharltonHestonJodyPendarvisTheRoseanneShow",
-        "file": "1998-10-20 Charlton Heston, Jody Pendarvis - The Roseanne Show.mp4",
-        "duration": 2546.65,
-        "title": "The Roseanne Show - Charlton Heston, Jody Pendarvis, Ellen Ladowsky",
-        "year": "1998"
-      },
       {
         "id": "19980922KirstieAlleyKellyPriceTheRoseanneShow",
         "file": "1998-09-22 Kirstie Alley, Kelly Price - The Roseanne Show.mp4",
@@ -3004,13 +2857,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 2,
     "items": [
       {
-        "id": "the_river_ran_red_dvd",
-        "file": "UNDEFINED.mp4",
-        "duration": 3477.14,
-        "title": "\"The River Ran Red\" documentary DVD",
-        "year": "1993"
-      },
-      {
         "id": "chasingthewindwithwgnstomskilling1994documentary",
         "file": "Chasing the Wind with WGN's Tom Skilling (1994 Documentary).mp4",
         "duration": 1339.77,
@@ -3088,13 +2934,6 @@ window.PREMIUM_CHANNELS = [
     "startMs": 1704329100000,
     "startIndex": 5,
     "items": [
-      {
-        "id": "wildlife-on-one-s18e06-enter-the-dragons-1991-x264-vhsrf",
-        "file": "Wildlife.on.One.S18E06.Enter.the.Dragons.1991.x264.AAC.VHSrf-SkinnyV.mp4",
-        "duration": 1749.42,
-        "title": "Wildlife on One - S18E06 - Enter the Dragons (Februrary 4th 1991)",
-        "year": "1991"
-      },
       {
         "id": "TheNatureofSex",
         "file": "Nature.S12E07.The.Nature.of.Sex.(4).Sex.and.the.Human.Animal.1993.VHSRip.AAC2.0.x264-astro.mp4",
@@ -3259,13 +3098,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 1,
     "items": [
       {
-        "id": "calajhs_001288",
-        "file": "calajhs_001288_access.mp4",
-        "duration": 2122.41,
-        "title": "Oral History, Annette Shapiro and Rosella Familian, 1991",
-        "year": "1991"
-      },
-      {
         "id": "cadipl_000017",
         "file": "cadipl_000017_access.HD.mp4",
         "duration": 3248.3,
@@ -3394,13 +3226,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 7,
     "items": [
       {
-        "id": "dammit-jim-im-only-a-documentary",
-        "file": "Dammit Jim! I'm Only A Documentary!.mp4",
-        "duration": 1369.47,
-        "title": "Dammit Jim! I'm Only A Documentary!",
-        "year": "1993"
-      },
-      {
         "id": "discoverychannel_korubuindians_202111",
         "file": "discoverychannel.mp4",
         "duration": 1348.78,
@@ -3433,13 +3258,6 @@ window.PREMIUM_CHANNELS = [
         "file": "Q.E.D. - Welcome To Fat Camp - February 7th, 1990.ia.mp4",
         "duration": 1623.91,
         "title": "Q.E.D. - Welcome To Fat Camp - February 7th, 1990 - MP4",
-        "year": "1990"
-      },
-      {
-        "id": "the-great-war-by-air-and-by-sea",
-        "file": "The Great War By Air and By Sea (Part 1).mp4",
-        "duration": 1563.56,
-        "title": "The Great War: By Air And By Sea",
         "year": "1990"
       },
       {
@@ -3484,13 +3302,6 @@ window.PREMIUM_CHANNELS = [
         "duration": 3582.17,
         "title": "West Oakland Oral History Interview: Josephine De La Cruz Interview",
         "year": "1995"
-      },
-      {
-        "id": "cadipl_000023",
-        "file": "cadipl_000023_access.HD.mp4",
-        "duration": 3208.26,
-        "title": "Otto Rohwer Oral History",
-        "year": "1998"
       },
       {
         "id": "caflsop_00004",
@@ -3564,13 +3375,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 3,
     "items": [
       {
-        "id": "darkman-trilogy-1990",
-        "file": "Darkman - 01 1990.mp4",
-        "duration": 5724.14,
-        "title": "Darkman Trilogy 1990",
-        "year": "1990"
-      },
-      {
         "id": "sinistercinema_phantom10kleagues",
         "file": "sinistercinema_phantom10kleagues.mp4",
         "duration": 5121.62,
@@ -3613,13 +3417,6 @@ window.PREMIUM_CHANNELS = [
     "startMs": 1704369840000,
     "startIndex": 6,
     "items": [
-      {
-        "id": "brotherhood-of-the-wolf",
-        "file": "Brotherhood Of The Wolf.ia.mp4",
-        "duration": 9008.58,
-        "title": "Brotherhood Of The Wolf (2001)",
-        "year": "2001"
-      },
       {
         "id": "close-your-eyes-xvid",
         "file": "CloseYourEyes xvid.mp4",
@@ -3738,13 +3535,6 @@ window.PREMIUM_CHANNELS = [
         "file": "Sharpshooter dvdrip.mp4",
         "duration": 4890.08,
         "title": "Sharpshooter Dvdrip",
-        "year": "2007"
-      },
-      {
-        "id": "the-invincible-ironman",
-        "file": "The Invincible Ironman.mp4",
-        "duration": 4984.03,
-        "title": "The Invincible Ironman",
         "year": "2007"
       },
       {
@@ -4549,20 +4339,6 @@ window.PREMIUM_CHANNELS = [
         "year": "2002"
       },
       {
-        "id": "bjorklater",
-        "file": "BJORK_LIVE_TV_NTSC.mp4",
-        "duration": 2035.07,
-        "title": "Bj\u00f6rk: Later with Jools Holland (2003) - DVD Video",
-        "year": "2003"
-      },
-      {
-        "id": "ec24_20260126",
-        "file": "Eric Clapton 24 nights X265 VHS Decode 4-3.mp4",
-        "duration": 5503.12,
-        "title": "Eric Clapton - 24 Nights (1991) [VHS Decode RF Capture]",
-        "year": "1991"
-      },
-      {
         "id": "madonna-in-bed-with-madonna-1991-laserdisc-tolw-3095-final-encode",
         "file": "Madonna - In Bed With Madonna 1991 - Laserdisc TOLW-3095 - Final Encode.mp4",
         "duration": 7175.92,
@@ -4662,13 +4438,6 @@ window.PREMIUM_CHANNELS = [
         "year": "1995"
       },
       {
-        "id": "daftendirektour97-alive97-daftpunk-live-at-mayan-theater",
-        "file": "DaftPunkMayan.ia.mp4",
-        "duration": 5267.05,
-        "title": "Daftendirektour '97 / Alive '97 - Daft Punk Live at Mayan Theater",
-        "year": "1997"
-      },
-      {
         "id": "y-2mate.com-inxs-live-at-much-music-toronto-12-apr-1997-480p",
         "file": "y2mate.com - INXS  live at Much Music  Toronto 12 Apr 1997_480p.ia.mp4",
         "duration": 1716.4,
@@ -4762,13 +4531,6 @@ window.PREMIUM_CHANNELS = [
     "startIndex": 8,
     "items": [
       {
-        "id": "Hockey_Game_SensTrn_McLovins_Vs_Pembroke_Final_14Dec2008",
-        "file": "SSA50041_512kb.mp4",
-        "duration": 1169.4,
-        "title": "Hockey Game Sensplex Tournament McLovins Vs Pembroke Final 14 Dec 2008",
-        "year": "2008"
-      },
-      {
         "id": "Hockey_Brian_Kilrea_Last_Ottawa_67s_Game_15Mar2009",
         "file": "SSA50287_512kb.mp4",
         "duration": 2245.02,
@@ -4846,13 +4608,6 @@ window.PREMIUM_CHANNELS = [
     "startMs": 1704457140000,
     "startIndex": 1,
     "items": [
-      {
-        "id": "Pickup_Hockey_OutDoor_Dell_Arena_25Jan2007",
-        "file": "SSA50913_512kb.mp4",
-        "duration": 2610.73,
-        "title": "Pickup Hockey On OutDoor Dell Arena 25 Jan 2007",
-        "year": "2007"
-      },
       {
         "id": "Pickup_Hockey_OutDoor_Dell_Arena_10Feb2007",
         "file": "SSA50947_512kb.mp4",

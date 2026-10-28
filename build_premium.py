@@ -298,6 +298,13 @@ for it in items:
         by_id[it['id']] = it
 items = list(by_id.values())
 
+# Base genre channels own their items; keep premium from reusing them.
+try:
+    genre_ids = {it['id'] for c in json.load(open('genres.json')) for it in c['items']}
+    items = [it for it in items if it['id'] not in genre_ids]
+except FileNotFoundError:
+    genre_ids = set()
+
 def title_key(it):
     return re.sub(r'\s+', ' ', it['title'].lower()).strip()
 
@@ -354,7 +361,7 @@ for round_no in range(10):
             break
 
 for i in range(len(SPECS)):
-    if len(assigned[i]) < 5:
+    if len(assigned[i]) < 3:
         warnings.append(f'{name_by_i[i]}: only {len(assigned[i])} unique items')
 
 premium = []

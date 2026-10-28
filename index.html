@@ -12,9 +12,12 @@
     <div class="brand">TVGRID <span class="badge">LIVE</span></div>
     <div class="now-playing" id="nowPlaying">—</div>
     <div class="controls">
-      <button id="premiumBtn" class="on">Premium: On</button>
-      <button id="epgToggle">EPG</button>
-      <button id="geoBtn">Detect Location</button>
+      <button id="eraBtn" type="button" title="Switch between 90s and 2000s TV">Era: 90s</button>
+      <button id="fxBtn" class="on" type="button" title="Toggle CRT scanlines and chromatic aberration">CRT: On</button>
+      <button id="tubeBtn" class="on" type="button" title="Toggle rounded CRT tube corners">Tube: On</button>
+      <button id="premiumBtn" class="on" type="button">Premium: On</button>
+      <button id="epgToggle" type="button">EPG</button>
+      <button id="geoBtn" type="button">Detect Location</button>
     </div>
   </header>
   <main class="main">
@@ -33,8 +36,20 @@
         <a id="openTab" href="#" target="_blank" rel="noopener">Open source page</a>
       </div>
     </section>
-    <aside class="epg" id="epgPanel">
-      <h3>Electronic Program Guide</h3>
+    <aside class="epg" id="epgPanel" aria-label="TV guide">
+      <div class="guide-banner">
+        <div class="guide-logo" aria-hidden="true"><span>TV</span><b>GUIDE</b></div>
+        <div class="guide-banner-copy">
+          <div class="epg-kicker" id="guideKicker">TV GUIDE</div>
+          <h3 id="guideTitle">TONIGHT'S LINEUP</h3>
+          <div class="guide-banner-sub" id="guideNowPlaying">Select a channel to see what's on</div>
+        </div>
+        <div class="guide-banner-side">
+          <div class="epg-clock" id="guideClock">—</div>
+          <button id="guideClose" class="guide-close" type="button" aria-label="Close guide">Close</button>
+        </div>
+      </div>
+      <div class="guide-timebar" id="guideTimebar"></div>
       <div class="epg-grid" id="epgGrid"></div>
     </aside>
   </main>

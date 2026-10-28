@@ -63,29 +63,22 @@ for s in spelunkr_slugs:
     })
     num += 1
 
-archive_items = [
- ("all-my-children-may-8-1992-most","All My Children"),
- ("the-ghost-busters-1975","Ghost Busters"),
- ("Last-of-the-Summer-Wine-Series-5","Last of the Summer Wine"),
- ("TheMartinShortShowEp.2TheSteveMartinShow","Martin Short Show"),
- ("americas-funniest-people-balancing-acts-1990","America's Funniest People"),
- ("swiss-family-robinson-1974","Swiss Family Robinson"),
- ("inside-the-dream-factory-1995","Inside The Dream Factory"),
- ("ArkIIEpisode1TheFlies1976","Ark II"),
- ("bob-hopes-cross-country-xmas-show-1991","Bob Hope Xmas"),
- ("the-new-leave-it-to-beaver-still-the-beaver-1984-1989","Leave It To Beaver"),
- ("the-amazing-spider-man-1977-complete-series_202301","Amazing Spider-Man"),
- ("zoe-duncan-jack-and-jane-complete-series","Zoe Duncan Jack Jane"),
- ("slap-maxwell-story-1.01","Slap Maxwell"),
- ("episode-3-air-lock","Doctor Who"),
- ("1950sTelevisionCommercialBlueMagicCheerad1","1950s TV Commercials"),
- ("1952-RollerDerby-TheJoltersVsTheChiefs_105","Roller Derby"),
-]
-for ident, title in archive_items:
+genres = json.load(open("genres.json"))
+assert len(genres) == 16, len(genres)
+for i, g in enumerate(genres):
+    items = g["items"]
     channels.append({
-        "number": num, "id": f"archive-{ident}", "name": title, "category": "Archive TV",
-        "group": "archive", "mode": "archive", "ident": ident, "src": f"https://archive.org/details/{ident}",
-        "description": f"Archive.org classic TV: {title}"
+        "number": num,
+        "id": g["id"],
+        "name": g["name"],
+        "category": "Genre",
+        "group": "genre",
+        "mode": "playlist",
+        "description": g["description"],
+        "startMs": 1704067200000 + (num - 55) * 97 * 60000,
+        "startIndex": (i * 3) % max(1, len(items)),
+        "items": items,
+        "src": f"https://archive.org/details/{items[0]['id']}",
     })
     num += 1
 
