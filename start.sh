@@ -50,7 +50,7 @@ install_dependencies() {
 }
 
 copy_static() {
-  local files=(index.html app.js channels.js premium.js styles.css server.js)
+  local files=(index.html app.js channels.js premium.js premium_extra.js styles.css server.js)
   local file
   run_timed mkdir -p "$BUILD_DIR/vendor"
   for file in "${files[@]}"; do

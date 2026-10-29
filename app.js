@@ -3,11 +3,104 @@ const ARCHIVE_BASE = "https://archive.org/download/";
 const BASE_START = Date.parse("2024-01-01T00:00:00Z");
 
 const THEME_KEYS = { era: "tvgrid-era", fx: "tvgrid-fx", tube: "tvgrid-tube" };
+const LINEUP_KEY = "tvgrid-lineup-v1";
+const LAST_CHANNEL_KEY = "tvgrid-last-channel-v1";
+const MAX_LINEUP = 350;
+const LINEUP_STATE_VERSION = 2;
+
+const DAYPARTS = [
+  { id: "late", label: "Late Night", start: 0, end: 2 },
+  { id: "overnight", label: "Overnight", start: 2, end: 6 },
+  { id: "morning", label: "Morning", start: 6, end: 12 },
+  { id: "daytime", label: "Daytime", start: 12, end: 18 },
+  { id: "evening", label: "Evening", start: 18, end: 22 },
+  { id: "night", label: "Night", start: 22, end: 24 }
+];
+const DAYPART_DISPLAY = ["morning", "daytime", "evening", "night", "late", "overnight"]
+  .map(id => DAYPARTS.find(p => p.id === id));
+const DAYPART_BY_ID = Object.fromEntries(DAYPARTS.map(p => [p.id, p]));
+const DAYPART_MATCHERS = {
+  morning: /\b(morning|today|breakfast|news|talk|kids|children|cartoon|family|game|show|sunrise|session)\b/i,
+  daytime: /\b(soap|sitcom|comedy|game|talk|drama|family|kids|children|cartoon|daytime|show)\b/i,
+  evening: /\b(drama|action|sci-fi|science fiction|movie|film|adventure|star trek|farscape|evening|music|concert)\b/i,
+  night: /\b(night|late|horror|thriller|crime|action|drama|comedy|talk|movie|film)\b/i,
+  late: /\b(late|night|stand-up|standup|comedy|talk|music|horror|cult|movie|film)\b/i,
+  overnight: /\b(overnight|horror|sci-fi|science fiction|cult|music|documentary|drama|movie|film)\b/i
+};
+
+function numberRange(from, to) {
+  return Array.from({ length: to - from + 1 }, (_, i) => from + i);
+}
+
+const PREMIUM_CATEGORY_RANGES = [
+  { from: 71, to: 75, name: "Cartoons" },
+  { from: 76, to: 80, name: "Anime" },
+  { from: 81, to: 81, name: "Kids" },
+  { from: 82, to: 82, name: "Family" },
+  { from: 83, to: 88, name: "Sitcoms" },
+  { from: 89, to: 91, name: "Soaps" },
+  { from: 92, to: 94, name: "Drama" },
+  { from: 95, to: 95, name: "Movies" },
+  { from: 96, to: 96, name: "Teen" },
+  { from: 97, to: 100, name: "Sci-Fi" },
+  { from: 101, to: 104, name: "Action" },
+  { from: 105, to: 105, name: "Drama" },
+  { from: 106, to: 108, name: "Game Shows" },
+  { from: 109, to: 110, name: "Talk" },
+  { from: 111, to: 114, name: "News" },
+  { from: 115, to: 115, name: "Documentary" },
+  { from: 116, to: 116, name: "Nature" },
+  { from: 117, to: 117, name: "Science" },
+  { from: 118, to: 118, name: "History" },
+  { from: 119, to: 119, name: "True Crime" },
+  { from: 120, to: 120, name: "Documentary" },
+  { from: 121, to: 121, name: "History" },
+  { from: 122, to: 133, name: "Movies" },
+  { from: 134, to: 135, name: "Music" },
+  { from: 136, to: 136, name: "Movies" },
+  { from: 137, to: 138, name: "Sports" },
+  { from: 139, to: 140, name: "Wrestling" }
+];
+const PREMIUM_CATEGORY_BY_NUMBER = {};
+for (const range of PREMIUM_CATEGORY_RANGES) {
+  for (let n = range.from; n <= range.to; n++) PREMIUM_CATEGORY_BY_NUMBER[n] = range.name;
+}
+const PREMIUM_CATEGORY_NAMES = [...new Set([
+  ...(window.PREMIUM_CHANNELS || []).map(c => c.lineupCategory),
+  ...(window.EXTRA_CHANNELS || []).map(c => c.lineupCategory)
+].filter(Boolean))].sort();
+
+const LINEUP_PACKAGES = [
+  { id: "kids", name: "Kids & Family", desc: "Cartoons, anime, kids and family television.", channels: numberRange(71, 82) },
+  { id: "comedy", name: "Comedy", desc: "Sitcoms and comfort-TV comedy blocks.", channels: numberRange(83, 88) },
+  { id: "drama", name: "Drama & Soaps", desc: "Soaps, dramas, teen TV and showcase drama.", channels: [89, 90, 91, 92, 93, 94, 96, 105] },
+  { id: "scifi", name: "Sci-Fi & Action", desc: "Science fiction, action, cops and adventure.", channels: numberRange(97, 104) },
+  { id: "games", name: "Game & Talk", desc: "Game shows, talk shows and interviews.", channels: numberRange(106, 110) },
+  { id: "news", name: "News & Docs", desc: "News, documentaries, nature, science and history.", channels: numberRange(111, 121) },
+  { id: "movies", name: "Movies", desc: "Feature films across every premium movie channel.", channels: [95, ...numberRange(122, 133), 136] },
+  { id: "music", name: "Music & Sports", desc: "Music, concerts, hockey and wrestling.", channels: [134, 135, 137, 138, 139, 140] },
+  { id: "comedy-plus", name: "Comedy Plus", desc: "More sitcoms, sketch, stand-up and comedy blocks.", channels: numberRange(141, 161), added: LINEUP_STATE_VERSION },
+  { id: "drama-plus", name: "Drama Plus", desc: "More serials, TV movies and dramatic anthologies.", channels: numberRange(162, 182), added: LINEUP_STATE_VERSION },
+  { id: "movies-plus", name: "Movies Plus", desc: "More feature films from the 1990s and 2000s.", channels: numberRange(183, 203), added: LINEUP_STATE_VERSION },
+  { id: "scifi-plus", name: "Sci-Fi & Action Plus", desc: "More science fiction, action and adventure.", channels: numberRange(204, 224), added: LINEUP_STATE_VERSION },
+  { id: "kids-plus", name: "Kids & Family Plus", desc: "More cartoons, kids shows and family viewing.", channels: numberRange(225, 245), added: LINEUP_STATE_VERSION },
+  { id: "docs-plus", name: "Docs & History Plus", desc: "More documentaries, history, nature and science.", channels: numberRange(246, 266), added: LINEUP_STATE_VERSION },
+  { id: "news-plus", name: "News, Talk & Game Plus", desc: "More news, talk, interviews and game shows.", channels: numberRange(267, 287), added: LINEUP_STATE_VERSION },
+  { id: "music-plus", name: "Music & Sports Plus", desc: "More concerts, music television, sports and hockey.", channels: numberRange(288, 308), added: LINEUP_STATE_VERSION },
+  { id: "soaps-plus", name: "Soaps & Teen Plus", desc: "More daytime soaps, teen drama and serials.", channels: numberRange(309, 329), added: LINEUP_STATE_VERSION },
+  { id: "cult-plus", name: "Cult & Horror Plus", desc: "More cult films, horror, thrillers and late-night oddities.", channels: numberRange(330, 350), added: LINEUP_STATE_VERSION }
+];
 function readPreference(key, fallback) {
   try { return localStorage.getItem(key) || fallback; } catch (e) { return fallback; }
 }
 function writePreference(key, value) {
   try { localStorage.setItem(key, value); } catch (e) {}
+}
+function readStoredJson(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (e) { return fallback; }
 }
 let tvEra = readPreference(THEME_KEYS.era, "90s") === "2000s" ? "2000s" : "90s";
 let crtOn = readPreference(THEME_KEYS.fx, "on") !== "off";
@@ -87,8 +180,19 @@ const LOCAL_NEWS_FALLBACK = [
 ];
 
 let standardChannels = window.CHANNELS.slice();
-let premiumChannels = window.PREMIUM_CHANNELS || [];
-let premiumOn = true;
+let premiumChannels = (window.PREMIUM_CHANNELS || []).concat(window.EXTRA_CHANNELS || []);
+const savedLineup = readStoredJson(LINEUP_KEY, {}) || {};
+const savedPackages = Array.isArray(savedLineup.packages) ? savedLineup.packages : null;
+let premiumOn = savedLineup.premiumOn !== false;
+let selectedPackages = new Set(savedPackages === null ? LINEUP_PACKAGES.map(p => p.id) : savedPackages.filter(id => LINEUP_PACKAGES.some(p => p.id === id)));
+const migratePackages = savedPackages !== null && (Number(savedLineup.version) || 1) < LINEUP_STATE_VERSION;
+if (migratePackages) {
+  for (const pack of LINEUP_PACKAGES) {
+    if (pack.added === LINEUP_STATE_VERSION) selectedPackages.add(pack.id);
+  }
+}
+let hiddenCategories = new Set(Array.isArray(savedLineup.hiddenCategories) ? savedLineup.hiddenCategories.filter(name => PREMIUM_CATEGORY_NAMES.includes(name)) : []);
+if (migratePackages) saveLineupState();
 let channels = [];
 let current = null;
 let activeGroup = null;
@@ -99,15 +203,72 @@ let spelunkrManifests = {};
 let activeSpelunkr = null;
 let archiveMetaCache = {};
 let metaInflight = {};
+let daypartTimer = null;
 
 const mount = document.getElementById("playerMount");
 const overlay = document.getElementById("playerOverlay");
 
+function premiumCategoryFor(c) {
+  return c.lineupCategory || PREMIUM_CATEGORY_BY_NUMBER[c.number] || "Premium";
+}
+
+function selectedPremiumNumbers() {
+  const numbers = new Set();
+  for (const pack of LINEUP_PACKAGES) {
+    if (!selectedPackages.has(pack.id)) continue;
+    for (const n of pack.channels) numbers.add(n);
+  }
+  return numbers;
+}
+
+function selectedPremiumChannels() {
+  const numbers = selectedPremiumNumbers();
+  return premiumChannels
+    .filter(c => numbers.has(c.number) && !hiddenCategories.has(premiumCategoryFor(c)))
+    .sort((a, b) => a.number - b.number);
+}
+
+function saveLineupState() {
+  writePreference(LINEUP_KEY, JSON.stringify({
+    version: LINEUP_STATE_VERSION,
+    premiumOn,
+    packages: [...selectedPackages],
+    hiddenCategories: [...hiddenCategories]
+  }));
+}
+
+function syncPremiumUI() {
+  const top = document.getElementById("premiumBtn");
+  const menu = document.getElementById("lineupPremiumBtn");
+  const label = `Premium: ${premiumOn ? "On" : "Off"}`;
+  if (top) {
+    top.textContent = label;
+    top.classList.toggle("on", premiumOn);
+    top.setAttribute("aria-pressed", String(premiumOn));
+  }
+  if (menu) {
+    menu.textContent = label;
+    menu.classList.toggle("on", premiumOn);
+    menu.setAttribute("aria-pressed", String(premiumOn));
+  }
+}
+
 function rebuildChannels() {
-  channels = premiumOn ? standardChannels.concat(premiumChannels) : standardChannels.slice();
+  const room = Math.max(0, MAX_LINEUP - standardChannels.length);
+  channels = premiumOn ? standardChannels.concat(selectedPremiumChannels().slice(0, room)) : standardChannels.slice();
+  if (current && !channels.some(c => c.number === current.number && c.name === current.name)) {
+    current = null;
+    clearPlayer();
+    setOverlay("Select a channel");
+    document.getElementById("channelTitle").textContent = "—";
+    document.getElementById("channelDesc").textContent = "—";
+    document.getElementById("nowPlaying").textContent = "—";
+  }
   renderGroups();
   renderChannels();
   renderEPG();
+  syncPremiumUI();
+  renderLineupMenu();
 }
 
 function setOverlay(text, isError) {
@@ -121,6 +282,7 @@ function hideOverlay() {
 }
 
 function clearMedia() {
+  clearDaypartTimer();
   if (cleanupPlayer) {
     try { cleanupPlayer(); } catch (e) {}
     cleanupPlayer = null;
@@ -252,6 +414,127 @@ function archiveUrl(item) {
   return ARCHIVE_BASE + encodeURIComponent(item.id) + "/" + file;
 }
 
+function hashString(value) {
+  let h = 2166136261;
+  const str = String(value);
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function mulberry32(seed) {
+  return function () {
+    seed = (seed + 0x6D2B79F5) | 0;
+    let t = seed;
+    t = Math.imul(t ^ (t >>> 15), 1 | t);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function seededShuffle(values, seed) {
+  const out = values.slice();
+  const rand = mulberry32(seed);
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+function localDateKey(when) {
+  const d = when instanceof Date ? when : new Date(when);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function dayStartMs(when) {
+  const d = when instanceof Date ? when : new Date(when);
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+}
+
+function daypartAt(when) {
+  const d = when instanceof Date ? when : new Date(when);
+  const hour = d.getHours();
+  return DAYPARTS.find(part => hour >= part.start && hour < part.end) || DAYPARTS[0];
+}
+
+function daypartPlaylist(c, when, partId) {
+  const items = c.items || [];
+  if (!items.length) return [];
+  const matcher = DAYPART_MATCHERS[partId];
+  let pool = matcher ? items.filter(item => matcher.test(`${item.title || ""} ${item.year || ""}`)) : [];
+  if (pool.length < 2) pool = items;
+  const channelKey = c.id || c.name || c.number;
+  const seed = hashString(`${channelKey}|${localDateKey(when)}|${partId}`);
+  const shuffled = seededShuffle(pool, seed);
+  const dayNumber = Math.floor(dayStartMs(when) / 86400000);
+  const shift = Math.abs(hashString(`${channelKey}|${partId}`) + dayNumber) % shuffled.length;
+  return shuffled.slice(shift).concat(shuffled.slice(0, shift));
+}
+
+function playlistScheduleStart(c, when) {
+  const d = when instanceof Date ? when : new Date(when);
+  const key = c.id || c.name || c.number;
+  const offset = hashString(`${key}|${localDateKey(d)}|schedule`) % 86400000;
+  return dayStartMs(d) + offset;
+}
+
+function slotSchedule(c, when) {
+  const d = when instanceof Date ? when : new Date(when);
+  const part = daypartAt(d);
+  const startMs = dayStartMs(d) + part.start * 3600000;
+  const endMs = dayStartMs(d) + part.end * 3600000;
+  return { part, startMs, endMs, items: daypartPlaylist(c, d, part.id) };
+}
+
+function walkDaypartSchedule(c, guideStart, guideEnd) {
+  const out = [];
+  let cursor = guideStart;
+  let guard = 0;
+  while (cursor < guideEnd && guard++ < 30) {
+    const slot = slotSchedule(c, new Date(cursor));
+    const segmentStart = Math.max(cursor, slot.startMs);
+    const segmentEnd = Math.min(guideEnd, slot.endMs);
+    if (segmentEnd <= segmentStart) { cursor = slot.endMs; continue; }
+    const sched = calcPlaylist(slot.items, slot.startMs, 0, segmentStart);
+    if (!sched) { cursor = segmentEnd; continue; }
+    let itemStart = segmentStart - sched.offset * 1000;
+    let idx = sched.index;
+    let inner = 0;
+    while (itemStart < segmentEnd && inner++ < 80) {
+      const item = slot.items[idx % slot.items.length];
+      const dur = (item.duration || 0) * 1000;
+      if (!dur) break;
+      const start = Math.max(segmentStart, itemStart);
+      const end = Math.min(segmentEnd, itemStart + dur);
+      if (end > start) out.push({ title: item.title, start, end, daypart: slot.part.label, daypartId: slot.part.id });
+      itemStart += dur;
+      idx++;
+    }
+    cursor = segmentEnd;
+  }
+  return out;
+}
+
+function clearDaypartTimer() {
+  if (daypartTimer) {
+    clearTimeout(daypartTimer);
+    daypartTimer = null;
+  }
+}
+
+function armDaypartTimer(c, endMs) {
+  clearDaypartTimer();
+  const delay = endMs - Date.now();
+  if (delay <= 0) return;
+  daypartTimer = setTimeout(() => {
+    daypartTimer = null;
+    if (current === c) playPlaylist(c);
+  }, Math.min(delay + 50, 2147483647));
+}
+
 function calcPlaylist(items, startMs, startIndex, now) {
   if (!items || !items.length) return null;
   const total = items.reduce((s, i) => s + (i.duration || 0), 0);
@@ -315,24 +598,32 @@ async function ensureArchiveItems(c, minDuration) {
   if (!items.length) throw new Error("no playable items");
   c.items = items;
   c.mode = "playlist";
-  c.startMs = BASE_START + c.number * 3600000;
-  c.startIndex = c.number % items.length;
+  c.dayparts = true;
   return items;
 }
 
-function playPlaylistItem(c, index, offset) {
-  if (!c.items || !c.items.length) return;
-  const item = c.items[index % c.items.length];
+function playPlaylistItem(c, index, offset, items, onEnded) {
+  const list = items || c.items;
+  if (!list || !list.length) return;
+  const item = list[index % list.length];
   const url = archiveUrl(item);
-  if (!url) { playPlaylistItem(c, index + 1, 0); return; }
+  if (!url) { playPlaylistItem(c, index + 1, 0, list, onEnded); return; }
   clearMedia();
   document.getElementById("nowPlaying").textContent = `NOW: ${item.title}`;
   renderEPG();
-  mountVideo(url, offset || 0, () => { if (current === c) playPlaylist(c); }, item);
+  mountVideo(url, offset || 0, () => { if (current === c) (onEnded || (() => playPlaylist(c)))(); }, item);
 }
 
 function playPlaylist(c) {
-  const sched = calcPlaylist(c.items, c.startMs, c.startIndex, Date.now());
+  if (c.dayparts && c.items && c.items.length) {
+    const slot = slotSchedule(c, Date.now());
+    const sched = calcPlaylist(slot.items, slot.startMs, 0, Date.now());
+    if (!sched) throw new Error("empty playlist");
+    playPlaylistItem(c, sched.index, sched.offset, slot.items, () => playPlaylist(c));
+    armDaypartTimer(c, slot.endMs);
+    return;
+  }
+  const sched = calcPlaylist(c.items, playlistScheduleStart(c, Date.now()), 0, Date.now());
   if (!sched) throw new Error("empty playlist");
   playPlaylistItem(c, sched.index, sched.offset);
 }
@@ -415,6 +706,7 @@ function playSpelunkrItem(index, offset) {
 
 async function playChannel(c) {
   current = c;
+  writePreference(LAST_CHANNEL_KEY, JSON.stringify({ id: c.id || "", number: c.number, name: c.name }));
   const token = ++playToken;
   clearPlayer();
   document.getElementById("channelTitle").textContent = `${String(c.number).padStart(2,"0")} ${c.name}`;
@@ -444,6 +736,13 @@ async function playChannel(c) {
   } catch (e) {
     if (token === playToken) setOverlay("Could not load this channel. Try another.", true);
   }
+}
+
+function restoreLastChannel() {
+  const saved = readStoredJson(LAST_CHANNEL_KEY, null);
+  if (!saved) return;
+  const c = channels.find(ch => (saved.id && ch.id === saved.id) || (!saved.id && ch.number === saved.number));
+  if (c) playChannel(c);
 }
 
 const LOCAL_ALIASES = {
@@ -717,13 +1016,13 @@ async function buildLocalPlaylists(byKey, city, local, token, spareDocs) {
     if (items.length) {
       any = true;
       c.mode = "playlist";
+      c.dayparts = true;
       c.items = items;
-      c.startMs = BASE_START + i * 7 * 3600000;
-      c.startIndex = (i * 3) % items.length;
       c.ident = items[0].id;
       c.src = `https://archive.org/details/${items[0].id}`;
     } else {
       c.mode = "archive";
+      c.dayparts = false;
       c.items = null;
       c.startMs = null;
       c.startIndex = 0;
@@ -847,6 +1146,111 @@ function renderGroups() {
   });
 }
 
+function hourLabel(hour) {
+  const h = hour % 24;
+  const suffix = h >= 12 ? "PM" : "AM";
+  const n = h % 12 || 12;
+  return `${n} ${suffix}`;
+}
+
+function daypartTimeRange(part) {
+  return `${hourLabel(part.start)}–${hourLabel(part.end)}`;
+}
+
+function renderLineupMenu() {
+  const countEl = document.getElementById("lineupCount");
+  if (!countEl) return;
+  countEl.textContent = String(channels.length);
+  const packagesEl = document.getElementById("lineupPackagesCount");
+  if (packagesEl) packagesEl.textContent = `${selectedPackages.size} of ${LINEUP_PACKAGES.length} packages`;
+  syncPremiumUI();
+
+  const packageList = document.getElementById("packageList");
+  if (packageList) {
+    packageList.innerHTML = "";
+    const orderedPackages = [...LINEUP_PACKAGES].sort((a, b) => Number(Boolean(b.added)) - Number(Boolean(a.added)));
+    for (const pack of orderedPackages) {
+      const label = document.createElement("label");
+      label.className = "package-option" + (selectedPackages.has(pack.id) ? " selected" : "");
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.dataset.pack = pack.id;
+      input.checked = selectedPackages.has(pack.id);
+      const copy = document.createElement("span");
+      copy.className = "package-copy";
+      const title = document.createElement("b");
+      title.textContent = pack.name;
+      const size = document.createElement("small");
+      size.textContent = `${pack.channels.length} channels`;
+      const desc = document.createElement("em");
+      desc.textContent = pack.desc;
+      copy.append(title, size, desc);
+      label.append(input, copy);
+      packageList.appendChild(label);
+    }
+  }
+
+  const categoryList = document.getElementById("categoryList");
+  if (categoryList) {
+    categoryList.innerHTML = "";
+    for (const name of PREMIUM_CATEGORY_NAMES) {
+      const label = document.createElement("label");
+      label.className = "cat-chip";
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.dataset.category = name;
+      input.checked = !hiddenCategories.has(name);
+      const text = document.createElement("span");
+      text.textContent = name;
+      label.append(input, text);
+      categoryList.appendChild(label);
+    }
+  }
+
+  const legend = document.getElementById("daypartLegend");
+  if (legend) {
+    const active = daypartAt(new Date()).id;
+    legend.innerHTML = "";
+    for (const part of DAYPART_DISPLAY) {
+      const pill = document.createElement("div");
+      pill.className = "daypart-pill" + (part.id === active ? " active" : "");
+      const title = document.createElement("b");
+      title.textContent = part.label;
+      const time = document.createElement("small");
+      time.textContent = daypartTimeRange(part);
+      pill.append(title, time);
+      legend.appendChild(pill);
+    }
+  }
+}
+
+function setMenuOpen(open) {
+  const menu = document.getElementById("lineupMenu");
+  const scrim = document.getElementById("menuScrim");
+  const button = document.getElementById("menuBtn");
+  if (!menu || !scrim || !button) return;
+  menu.classList.toggle("open", open);
+  menu.setAttribute("aria-hidden", String(!open));
+  scrim.hidden = !open;
+  document.body.classList.toggle("menu-open", open);
+  button.setAttribute("aria-expanded", String(open));
+  if (open) renderLineupMenu();
+}
+
+function setPremium(on) {
+  premiumOn = on;
+  saveLineupState();
+  rebuildChannels();
+}
+
+function resetLineup() {
+  premiumOn = true;
+  selectedPackages = new Set(LINEUP_PACKAGES.map(p => p.id));
+  hiddenCategories.clear();
+  saveLineupState();
+  rebuildChannels();
+}
+
 function liveProgram(c, now) {
   const start = new Date(now);
   start.setMinutes(0, 0, 0);
@@ -854,8 +1258,17 @@ function liveProgram(c, now) {
 }
 
 function programFor(c, now) {
+  if (c.dayparts && c.mode === "playlist" && c.items && c.items.length) {
+    const slot = slotSchedule(c, now);
+    const s = calcPlaylist(slot.items, slot.startMs, 0, now);
+    if (s) {
+      const start = now - s.offset * 1000;
+      const end = Math.min(start + (s.item.duration || 0) * 1000, slot.endMs);
+      return { title: s.item.title, start: new Date(start), end: new Date(end), daypart: slot.part.label, daypartId: slot.part.id };
+    }
+  }
   if (c.mode === "playlist" && c.items && c.items.length) {
-    const s = calcPlaylist(c.items, c.startMs, c.startIndex, now);
+    const s = calcPlaylist(c.items, playlistScheduleStart(c, now), 0, now);
     if (s) {
       const start = now - s.offset * 1000;
       return { title: s.item.title, start: new Date(start), end: new Date(start + s.item.duration * 1000) };
@@ -863,7 +1276,7 @@ function programFor(c, now) {
   }
   if (c.mode === "archive") {
     if (c.items && c.items.length) {
-      const s = calcPlaylist(c.items, c.startMs, c.startIndex, now);
+      const s = calcPlaylist(c.items, playlistScheduleStart(c, now), 0, now);
       if (s) {
         const start = now - s.offset * 1000;
         return { title: s.item.title, start: new Date(start), end: new Date(start + s.item.duration * 1000) };
@@ -910,11 +1323,14 @@ function walkGuidePlaylist(items, startMs, startIndex, guideStart, guideEnd) {
 }
 
 function guideSchedule(c, guideStart, guideEnd) {
+  if (c.dayparts && c.mode === "playlist" && c.items && c.items.length) {
+    return walkDaypartSchedule(c, guideStart, guideEnd);
+  }
   if (c.mode === "playlist" && c.items && c.items.length) {
-    return walkGuidePlaylist(c.items, c.startMs, c.startIndex, guideStart, guideEnd);
+    return walkGuidePlaylist(c.items, playlistScheduleStart(c, guideStart), 0, guideStart, guideEnd);
   }
   if (c.mode === "archive" && c.items && c.items.length) {
-    return walkGuidePlaylist(c.items, c.startMs, c.startIndex, guideStart, guideEnd);
+    return walkGuidePlaylist(c.items, playlistScheduleStart(c, guideStart), 0, guideStart, guideEnd);
   }
   if (c.mode === "spelunkr") {
     const ch = spelunkrLineup && spelunkrLineup.channels.find(x => x.id === c.slug);
@@ -949,7 +1365,14 @@ function renderEPG() {
   const guideEnd = guideStart + slots * step;
   const fmt = d => d.toLocaleTimeString([], tvEra === "90s" ? { hour: "numeric", minute: "2-digit" } : { hour: "2-digit", minute: "2-digit" });
   const sub = document.getElementById("guideNowPlaying");
-  if (sub) sub.textContent = current ? `${current.name} · ${programFor(current, now).title}` : "Select a channel to see what's on";
+  if (sub) {
+    if (current) {
+      const live = programFor(current, now);
+      sub.textContent = `${current.name} · ${live.daypart ? live.daypart + " · " : ""}${live.title}`;
+    } else {
+      sub.textContent = "Select a channel to see what's on";
+    }
+  }
   updateGuideClock();
   const timebar = document.getElementById("guideTimebar");
   if (timebar) {
@@ -975,6 +1398,10 @@ function renderEPG() {
       if (entry.start < guideStart) block.classList.add("continues-left");
       if (entry.end > guideEnd) block.classList.add("continues-right");
       if (now >= entry.start && now < entry.end) block.classList.add("current");
+      if (entry.daypartId) {
+        block.classList.add("has-daypart");
+        block.dataset.daypart = entry.daypartId;
+      }
       block.style.left = `${startPct}%`;
       block.style.width = `${endPct - startPct}%`;
       const title = document.createElement("span");
@@ -982,6 +1409,12 @@ function renderEPG() {
       title.textContent = entry.title;
       title.title = entry.title;
       block.appendChild(title);
+      if (entry.daypart && endPct - startPct > 5) {
+        const tag = document.createElement("span");
+        tag.className = "guide-daypart-tag";
+        tag.textContent = entry.daypart;
+        block.appendChild(tag);
+      }
       progWrap.appendChild(block);
     }
     if (!progWrap.children.length) {
@@ -1041,11 +1474,31 @@ document.getElementById("guideClose").addEventListener("click", () => {
   document.getElementById("epgPanel").classList.remove("open");
 });
 document.getElementById("geoBtn").addEventListener("click", detectGeo);
-document.getElementById("premiumBtn").addEventListener("click", () => {
-  premiumOn = !premiumOn;
-  document.getElementById("premiumBtn").textContent = `Premium: ${premiumOn ? "On" : "Off"}`;
-  document.getElementById("premiumBtn").classList.toggle("on", premiumOn);
+document.getElementById("premiumBtn").addEventListener("click", () => setPremium(!premiumOn));
+document.getElementById("lineupPremiumBtn").addEventListener("click", () => setPremium(!premiumOn));
+document.getElementById("menuBtn").addEventListener("click", () => setMenuOpen(!document.getElementById("lineupMenu").classList.contains("open")));
+document.getElementById("menuClose").addEventListener("click", () => setMenuOpen(false));
+document.getElementById("menuScrim").addEventListener("click", () => setMenuOpen(false));
+document.getElementById("lineupReset").addEventListener("click", resetLineup);
+document.getElementById("lineupApply").addEventListener("click", () => setMenuOpen(false));
+document.getElementById("packageList").addEventListener("change", event => {
+  const id = event.target.dataset.pack;
+  if (!id) return;
+  if (event.target.checked) selectedPackages.add(id);
+  else selectedPackages.delete(id);
+  saveLineupState();
   rebuildChannels();
+});
+document.getElementById("categoryList").addEventListener("change", event => {
+  const name = event.target.dataset.category;
+  if (!name) return;
+  if (event.target.checked) hiddenCategories.delete(name);
+  else hiddenCategories.add(name);
+  saveLineupState();
+  rebuildChannels();
+});
+window.addEventListener("keydown", event => {
+  if (event.key === "Escape") setMenuOpen(false);
 });
 document.getElementById("eraBtn").addEventListener("click", () => {
   tvEra = tvEra === "90s" ? "2000s" : "90s";
@@ -1063,9 +1516,16 @@ document.getElementById("tubeBtn").addEventListener("click", () => {
   applyTheme();
 });
 
-premiumChannels.forEach(c => (c.items || []).forEach(it => { it.title = cleanTitle(it.title); }));
+premiumChannels.forEach(c => {
+  (c.items || []).forEach(it => { it.title = cleanTitle(it.title); });
+  if (c.mode === "playlist" && c.items && c.items.length) c.dayparts = true;
+});
+standardChannels.forEach(c => {
+  if (c.mode === "playlist" && c.items && c.items.length) c.dayparts = true;
+});
 applyTheme({ render: false });
 rebuildChannels();
+restoreLastChannel();
 detectGeo();
 preloadSpelunkr();
 preloadArchive();

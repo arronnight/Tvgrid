@@ -12,6 +12,9 @@
     <div class="brand">TVGRID <span class="badge">LIVE</span></div>
     <div class="now-playing" id="nowPlaying">—</div>
     <div class="controls">
+      <button id="menuBtn" class="menu-btn" type="button" aria-controls="lineupMenu" aria-expanded="false">
+        <span class="menu-lines" aria-hidden="true"><i></i><i></i><i></i></span><span>Menu</span>
+      </button>
       <button id="eraBtn" type="button" title="Switch between 90s and 2000s TV">Era: 90s</button>
       <button id="fxBtn" class="on" type="button" title="Toggle CRT scanlines and chromatic aberration">CRT: On</button>
       <button id="tubeBtn" class="on" type="button" title="Toggle rounded CRT tube corners">Tube: On</button>
@@ -53,11 +56,43 @@
       <div class="epg-grid" id="epgGrid"></div>
     </aside>
   </main>
+  <div id="menuScrim" class="menu-scrim" hidden></div>
+  <aside id="lineupMenu" class="lineup-menu" role="dialog" aria-modal="true" aria-label="Premium lineup manager" aria-hidden="true">
+    <div class="lineup-head">
+      <div>
+        <div class="lineup-kicker">PREMIUM CONTROL</div>
+        <h2>Lineup Manager</h2>
+      </div>
+      <button id="menuClose" class="lineup-close" type="button" aria-label="Close lineup manager">Close</button>
+    </div>
+    <div class="lineup-summary">
+      <div class="lineup-count"><strong id="lineupCount">140</strong><span> / 350 channels</span></div>
+      <button id="lineupPremiumBtn" class="lineup-premium on" type="button">Premium: On</button>
+    </div>
+    <p class="lineup-note">Your core 70-channel lineup stays in place. The 10 Plus packs add channels 141–350; changes apply immediately.</p>
+    <section class="lineup-section">
+      <div class="lineup-section-head"><h3>Packages</h3><span id="lineupPackagesCount"></span></div>
+      <div id="packageList" class="package-list"></div>
+    </section>
+    <section class="lineup-section">
+      <div class="lineup-section-head"><h3>Categories</h3><span>Uncheck to exclude</span></div>
+      <div id="categoryList" class="category-list"></div>
+    </section>
+    <section class="lineup-section">
+      <div class="lineup-section-head"><h3>Daily programming slots</h3><span>Rotates daily</span></div>
+      <div id="daypartLegend" class="daypart-grid"></div>
+    </section>
+    <div class="lineup-actions">
+      <button id="lineupReset" type="button">Reset lineup</button>
+      <button id="lineupApply" class="primary" type="button">Apply &amp; close</button>
+    </div>
+  </aside>
 </div>
 <script src="vendor/flv.min.js"></script>
 <script src="vendor/hls.min.js"></script>
 <script src="channels.js"></script>
 <script src="premium.js"></script>
+<script src="premium_extra.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
