@@ -3,17 +3,19 @@ import json
 channels = []
 num = 1
 
+# Seed the local block with real retro newscasts instead of placeholder films.
+# The location-aware pass in app.js can still replace these with nearby stations.
 local_defaults = [
-  ("Local News", "Regional news and weather", "the-ghost-busters-1975"),
-  ("Local Weather", "Regional weather and alerts", "the-ghost-busters-1975"),
-  ("Local Sports", "Area sports and highlights", "1952-RollerDerby-TheJoltersVsTheChiefs_105"),
-  ("Community Access", "Public access television", "Why-1995"),
-  ("City Council", "Government meetings", "the-ghost-busters-1975"),
-  ("Local Events", "Town hall and community events", "Why-1995"),
-  ("Neighborhood", "Community stories", "the-ghost-busters-1975"),
-  ("Local Music", "Area musicians and performances", "the-ghost-busters-1975"),
-  ("Local History", "Regional history", "the-ghost-busters-1975"),
-  ("Local Culture", "Cultural programming", "Why-1995"),
+  ("Retro News", "Retro local newscast from the 1990s and 2000s", "wbbm-080194-10pm-r"),
+  ("Retro News 2", "Retro local newscast from the 1990s and 2000s", "wmaq-080194-6pm"),
+  ("Retro News 3", "Retro local newscast from the 1990s and 2000s", "wgn-news-at-noon-oct-31-2002-x-264"),
+  ("Retro News 4", "Retro local newscast from the 1990s and 2000s", "kron-071692-11pm"),
+  ("Retro News 5", "Retro local newscast from the 1990s and 2000s", "kgo-071692-11pm"),
+  ("Retro News 6", "Retro local newscast from the 1990s and 2000s", "kpix-071692-10pm"),
+  ("Retro News 7", "Retro local newscast from the 1990s and 2000s", "kvue-092791-6pm"),
+  ("Retro News 8", "Retro local newscast from the 1990s and 2000s", "whdh-112092-530pm"),
+  ("Retro News 9", "Retro local newscast from the 1990s and 2000s", "wcbs-112692-11pm"),
+  ("Retro News 10", "Retro local newscast from the 1990s and 2000s", "ktvu-channel-2-news-10-pm-1999"),
 ]
 for name, desc, ident in local_defaults:
     channels.append({

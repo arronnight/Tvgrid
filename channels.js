@@ -2,112 +2,112 @@ window.CHANNELS = [
   {
     "number": 1,
     "id": "local-1",
-    "name": "Local News",
+    "name": "Retro News",
     "category": "Local",
     "group": "local",
     "mode": "archive",
-    "ident": "the-ghost-busters-1975",
-    "src": "https://archive.org/details/the-ghost-busters-1975",
-    "description": "Regional news and weather"
+    "ident": "wbbm-080194-10pm-r",
+    "src": "https://archive.org/details/wbbm-080194-10pm-r",
+    "description": "Retro local newscast from the 1990s and 2000s"
   },
   {
     "number": 2,
     "id": "local-2",
-    "name": "Local Weather",
+    "name": "Retro News 2",
     "category": "Local",
     "group": "local",
     "mode": "archive",
-    "ident": "the-ghost-busters-1975",
-    "src": "https://archive.org/details/the-ghost-busters-1975",
-    "description": "Regional weather and alerts"
+    "ident": "wmaq-080194-6pm",
+    "src": "https://archive.org/details/wmaq-080194-6pm",
+    "description": "Retro local newscast from the 1990s and 2000s"
   },
   {
     "number": 3,
     "id": "local-3",
-    "name": "Local Sports",
+    "name": "Retro News 3",
     "category": "Local",
     "group": "local",
     "mode": "archive",
-    "ident": "1952-RollerDerby-TheJoltersVsTheChiefs_105",
-    "src": "https://archive.org/details/1952-RollerDerby-TheJoltersVsTheChiefs_105",
-    "description": "Area sports and highlights"
+    "ident": "wgn-news-at-noon-oct-31-2002-x-264",
+    "src": "https://archive.org/details/wgn-news-at-noon-oct-31-2002-x-264",
+    "description": "Retro local newscast from the 1990s and 2000s"
   },
   {
     "number": 4,
     "id": "local-4",
-    "name": "Community Access",
+    "name": "Retro News 4",
     "category": "Local",
     "group": "local",
     "mode": "archive",
-    "ident": "Why-1995",
-    "src": "https://archive.org/details/Why-1995",
-    "description": "Public access television"
+    "ident": "kron-071692-11pm",
+    "src": "https://archive.org/details/kron-071692-11pm",
+    "description": "Retro local newscast from the 1990s and 2000s"
   },
   {
     "number": 5,
     "id": "local-5",
-    "name": "City Council",
+    "name": "Retro News 5",
     "category": "Local",
     "group": "local",
     "mode": "archive",
-    "ident": "the-ghost-busters-1975",
-    "src": "https://archive.org/details/the-ghost-busters-1975",
-    "description": "Government meetings"
+    "ident": "kgo-071692-11pm",
+    "src": "https://archive.org/details/kgo-071692-11pm",
+    "description": "Retro local newscast from the 1990s and 2000s"
   },
   {
     "number": 6,
     "id": "local-6",
-    "name": "Local Events",
+    "name": "Retro News 6",
     "category": "Local",
     "group": "local",
     "mode": "archive",
-    "ident": "Why-1995",
-    "src": "https://archive.org/details/Why-1995",
-    "description": "Town hall and community events"
+    "ident": "kpix-071692-10pm",
+    "src": "https://archive.org/details/kpix-071692-10pm",
+    "description": "Retro local newscast from the 1990s and 2000s"
   },
   {
     "number": 7,
     "id": "local-7",
-    "name": "Neighborhood",
+    "name": "Retro News 7",
     "category": "Local",
     "group": "local",
     "mode": "archive",
-    "ident": "the-ghost-busters-1975",
-    "src": "https://archive.org/details/the-ghost-busters-1975",
-    "description": "Community stories"
+    "ident": "kvue-092791-6pm",
+    "src": "https://archive.org/details/kvue-092791-6pm",
+    "description": "Retro local newscast from the 1990s and 2000s"
   },
   {
     "number": 8,
     "id": "local-8",
-    "name": "Local Music",
+    "name": "Retro News 8",
     "category": "Local",
     "group": "local",
     "mode": "archive",
-    "ident": "the-ghost-busters-1975",
-    "src": "https://archive.org/details/the-ghost-busters-1975",
-    "description": "Area musicians and performances"
+    "ident": "whdh-112092-530pm",
+    "src": "https://archive.org/details/whdh-112092-530pm",
+    "description": "Retro local newscast from the 1990s and 2000s"
   },
   {
     "number": 9,
     "id": "local-9",
-    "name": "Local History",
+    "name": "Retro News 9",
     "category": "Local",
     "group": "local",
     "mode": "archive",
-    "ident": "the-ghost-busters-1975",
-    "src": "https://archive.org/details/the-ghost-busters-1975",
-    "description": "Regional history"
+    "ident": "wcbs-112692-11pm",
+    "src": "https://archive.org/details/wcbs-112692-11pm",
+    "description": "Retro local newscast from the 1990s and 2000s"
   },
   {
     "number": 10,
     "id": "local-10",
-    "name": "Local Culture",
+    "name": "Retro News 10",
     "category": "Local",
     "group": "local",
     "mode": "archive",
-    "ident": "Why-1995",
-    "src": "https://archive.org/details/Why-1995",
-    "description": "Cultural programming"
+    "ident": "ktvu-channel-2-news-10-pm-1999",
+    "src": "https://archive.org/details/ktvu-channel-2-news-10-pm-1999",
+    "description": "Retro local newscast from the 1990s and 2000s"
   },
   {
     "number": 11,
@@ -598,17 +598,10 @@ window.CHANNELS = [
     "category": "Genre",
     "group": "genre",
     "mode": "playlist",
-    "description": "Classic sitcoms from the 70s through the 90s.",
+    "description": "90s and 2000s sitcoms and comfort-TV comedy.",
     "startMs": 1704067200000,
     "startIndex": 0,
     "items": [
-      {
-        "id": "the-ghost-busters-1975",
-        "file": "The Ghost Busters (1975) Live Action Episode 01 The Maltese Monkey.mp4",
-        "duration": 1331.36,
-        "title": "Ghost Busters",
-        "year": "1975"
-      },
       {
         "id": "sydney-1990-sitcom",
         "file": "Sydney (1990 sitcom) - Episode 02 -\u201cPromises, Promises\u201d (March 28, 1990) - youtuber 'Have You Seen This'.mp4",
@@ -622,9 +615,16 @@ window.CHANNELS = [
         "duration": 1829.99,
         "title": "Hi Honey, I'm Home! (1992-93) sitcom, Julie Benz",
         "year": "1991"
+      },
+      {
+        "id": "top-of-the-heap-1991-sitcom",
+        "file": "102 The Agony And The Agony.mp4",
+        "duration": 1377,
+        "title": "Top of the Heap (1991) sitcom 7 eps, Matt Leblanc",
+        "year": "1991"
       }
     ],
-    "src": "https://archive.org/details/the-ghost-busters-1975"
+    "src": "https://archive.org/details/sydney-1990-sitcom"
   },
   {
     "number": 56,
@@ -633,17 +633,10 @@ window.CHANNELS = [
     "category": "Genre",
     "group": "genre",
     "mode": "playlist",
-    "description": "British and American comedy series.",
+    "description": "British and American comedy series from the 90s and 2000s.",
     "startMs": 1704073020000,
-    "startIndex": 3,
+    "startIndex": 0,
     "items": [
-      {
-        "id": "Last-of-the-Summer-Wine-Series-5",
-        "file": "And a Dewhurst Up a Fir Tree Christmas Special 1979.S00Ep02.mp4",
-        "duration": 1842.22,
-        "title": "Last of the Summer Wine",
-        "year": "1979"
-      },
       {
         "id": "the-peter-principle-series",
         "file": "The Peter Principle S02E01 Un Homme Et Une Femme - yt Audie Lilla.mp4",
@@ -666,7 +659,7 @@ window.CHANNELS = [
         "year": "1995"
       }
     ],
-    "src": "https://archive.org/details/Last-of-the-Summer-Wine-Series-5"
+    "src": "https://archive.org/details/the-peter-principle-series"
   },
   {
     "number": 57,
@@ -710,33 +703,33 @@ window.CHANNELS = [
     "category": "Genre",
     "group": "genre",
     "mode": "playlist",
-    "description": "Family sitcoms and wholesome comedy.",
+    "description": "Family sitcoms and wholesome comedy from the 90s and 2000s.",
     "startMs": 1704084660000,
     "startIndex": 0,
     "items": [
-      {
-        "id": "the-new-leave-it-to-beaver-still-the-beaver-1984-1989",
-        "file": "The New Leave It to Beaver (Still the Beaver) [1984 - 1989]/S00E00 - Still the Beaver (1983 TV Movie).mp4",
-        "duration": 4983.72,
-        "title": "Leave It To Beaver",
-        "year": "1984"
-      },
-      {
-        "id": "swiss-family-robinson-1974",
-        "file": "04 Curse Of The Idol.mp4",
-        "duration": 1428.28,
-        "title": "Swiss Family Robinson",
-        "year": "1974"
-      },
       {
         "id": "family_dog",
         "file": "Family Dog S01E00 Amazing Stories.mp4",
         "duration": 1418.81,
         "title": "Family Dog (1993) [Complete Series]",
         "year": "1993"
+      },
+      {
+        "id": "fudge-1995-sitcom",
+        "file": "00 Fudge-a-Mania [1995 VHS] The Rare Media Archive - 1gig.mp4",
+        "duration": 5580.27,
+        "title": "Fudge (1995) sitcom",
+        "year": "1995"
+      },
+      {
+        "id": "two-of-a-kind-1998",
+        "file": "Two of a Kind - 1x11 - A Very Carrie Christmas.mp4",
+        "duration": 1244.92,
+        "title": "Two of a Kind (1998\u201399) MaryKate + Ashley Olsen",
+        "year": "1998"
       }
     ],
-    "src": "https://archive.org/details/the-new-leave-it-to-beaver-still-the-beaver-1984-1989"
+    "src": "https://archive.org/details/family_dog"
   },
   {
     "number": 59,
@@ -780,33 +773,33 @@ window.CHANNELS = [
     "category": "Genre",
     "group": "genre",
     "mode": "playlist",
-    "description": "Science fiction series and speculative television.",
+    "description": "Science fiction series and speculative television from the 90s and 2000s.",
     "startMs": 1704096300000,
     "startIndex": 0,
     "items": [
-      {
-        "id": "ArkIIEpisode1TheFlies1976",
-        "file": "Ark II - Episode 1 - The Flies (1976).mp4",
-        "duration": 1362.48,
-        "title": "Ark II",
-        "year": "1976"
-      },
-      {
-        "id": "episode-3-air-lock",
-        "file": "Episode 3 - Air Lock.ia.mp4",
-        "duration": 1463.46,
-        "title": "Doctor Who",
-        "year": "1965"
-      },
       {
         "id": "nowhere-man-1995-96",
         "file": "Nowhere Man -  E01_25 Absolute Zero Full Episode.ia.mp4",
         "duration": 4018.35,
         "title": "Nowhere Man (1995-96) photographer hunted for negative - all 25 eps",
         "year": "1995"
+      },
+      {
+        "id": "now-and-again-1999-2000",
+        "file": "now_and_again_season_1_-_episode_17   Boy Wonder ___blurrier.mp4",
+        "duration": 2675.47,
+        "title": "Now And Again (1999-2000) -all 22 eps - H.Matarazzo",
+        "year": "1999"
+      },
+      {
+        "id": "perversions-of-science-HBO",
+        "file": "Perversions of Science -06- Planely Possible.mp4",
+        "duration": 1628.82,
+        "title": "Perversions Of Science Complete TV Series HBO (1997) SPACE TV",
+        "year": "1997"
       }
     ],
-    "src": "https://archive.org/details/ArkIIEpisode1TheFlies1976"
+    "src": "https://archive.org/details/nowhere-man-1995-96"
   },
   {
     "number": 61,
@@ -815,17 +808,10 @@ window.CHANNELS = [
     "category": "Genre",
     "group": "genre",
     "mode": "playlist",
-    "description": "Superheroes, action and adventure series.",
+    "description": "Superheroes, action and adventure series from the 90s and 2000s.",
     "startMs": 1704102120000,
     "startIndex": 0,
     "items": [
-      {
-        "id": "the-amazing-spider-man-1977-complete-series_202301",
-        "file": "02x07 02x08 The Chinese Web.ia.mp4",
-        "duration": 5775.04,
-        "title": "Amazing Spider-Man",
-        "year": "1977"
-      },
       {
         "id": "rescue-77-s-01-e-03-a-bumpy-ride",
         "file": "Rescue 77 S01E03 A Bumpy Ride.mp4",
@@ -839,9 +825,16 @@ window.CHANNELS = [
         "duration": 2838.87,
         "title": "She Wolf of London - Complete Series 1990",
         "year": "1990"
+      },
+      {
+        "id": "lightning-force-6",
+        "file": "Lightning Force - 6.mp4",
+        "duration": 1251.4,
+        "title": "Lightning Force - 6: The Last Nazi",
+        "year": "1991"
       }
     ],
-    "src": "https://archive.org/details/the-amazing-spider-man-1977-complete-series_202301"
+    "src": "https://archive.org/details/rescue-77-s-01-e-03-a-bumpy-ride"
   },
   {
     "number": 62,
@@ -850,7 +843,7 @@ window.CHANNELS = [
     "category": "Genre",
     "group": "genre",
     "mode": "playlist",
-    "description": "Drama series and television movies.",
+    "description": "Drama series and television movies from the 90s and 2000s.",
     "startMs": 1704107940000,
     "startIndex": 0,
     "items": [
@@ -862,18 +855,18 @@ window.CHANNELS = [
         "year": "1999"
       },
       {
-        "id": "slap-maxwell-story-1.01",
-        "file": "Slap Maxwell Story - 1.05.mp4",
-        "duration": 1408.4,
-        "title": "Slap Maxwell",
-        "year": "1987"
-      },
-      {
         "id": "due-south-1994-98",
         "file": "Due South (1994\u201398) CA crime comedy-drama - 60 of 67/Due South (1994) S01E00 Due South Season 01 Episode 00 Pilot [Full Length] - 2 hrs.mp4",
         "duration": 7466.1,
         "title": "Due South (1994\u201398) CA crime comedy-drama",
         "year": "1994"
+      },
+      {
+        "id": "moon-over-miami-1993",
+        "file": "Moon Over Miami - episode 01 - pilot - 59 min- archive - VCD_141437_0.mp4",
+        "duration": 3584.75,
+        "title": "Moon Over Miami (1993) crime drama",
+        "year": "1993"
       }
     ],
     "src": "https://archive.org/details/zoe-duncan-jack-and-jane-complete-series"
@@ -1025,17 +1018,10 @@ window.CHANNELS = [
     "category": "Genre",
     "group": "genre",
     "mode": "playlist",
-    "description": "Classic sports broadcasts and highlights.",
+    "description": "Classic sports broadcasts from the 90s and 2000s.",
     "startMs": 1704137040000,
     "startIndex": 0,
     "items": [
-      {
-        "id": "1952-RollerDerby-TheJoltersVsTheChiefs_105",
-        "file": "1952-RollerDerby-TheJoltersVsTheWesterners.mp4",
-        "duration": 1404.4,
-        "title": "Roller Derby",
-        "year": "1952"
-      },
       {
         "id": "Hockey_Game_SensTrn_McLovins_Vs_Pembroke_Final_14Dec2008",
         "file": "SSA50041_512kb.mp4",
@@ -1049,9 +1035,16 @@ window.CHANNELS = [
         "duration": 2610.73,
         "title": "Pickup Hockey On OutDoor Dell Arena 25 Jan 2007",
         "year": "2007"
+      },
+      {
+        "id": "Hockey_Brian_Kilrea_Last_Ottawa_67s_Game_15Mar2009",
+        "file": "SSA50287_512kb.mp4",
+        "duration": 2245.02,
+        "title": "Hockey - Brian Kilrea's Last Regular Season Game Coaching the OHL Ottawa 67s 15 March 2009",
+        "year": "2009"
       }
     ],
-    "src": "https://archive.org/details/1952-RollerDerby-TheJoltersVsTheChiefs_105"
+    "src": "https://archive.org/details/Hockey_Game_SensTrn_McLovins_Vs_Pembroke_Final_14Dec2008"
   },
   {
     "number": 68,

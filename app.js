@@ -6,7 +6,7 @@ const THEME_KEYS = { era: "tvgrid-era", fx: "tvgrid-fx", tube: "tvgrid-tube" };
 const LINEUP_KEY = "tvgrid-lineup-v1";
 const LAST_CHANNEL_KEY = "tvgrid-last-channel-v1";
 const MAX_LINEUP = 350;
-const LINEUP_STATE_VERSION = 2;
+const LINEUP_STATE_VERSION = 3;
 
 const DAYPARTS = [
   { id: "late", label: "Late Night", start: 0, end: 2 },
@@ -183,16 +183,10 @@ let standardChannels = window.CHANNELS.slice();
 let premiumChannels = (window.PREMIUM_CHANNELS || []).concat(window.EXTRA_CHANNELS || []);
 const savedLineup = readStoredJson(LINEUP_KEY, {}) || {};
 const savedPackages = Array.isArray(savedLineup.packages) ? savedLineup.packages : null;
+const DEFAULT_PACKAGES = LINEUP_PACKAGES.filter(p => !p.added).map(p => p.id);
 let premiumOn = savedLineup.premiumOn !== false;
-let selectedPackages = new Set(savedPackages === null ? LINEUP_PACKAGES.map(p => p.id) : savedPackages.filter(id => LINEUP_PACKAGES.some(p => p.id === id)));
-const migratePackages = savedPackages !== null && (Number(savedLineup.version) || 1) < LINEUP_STATE_VERSION;
-if (migratePackages) {
-  for (const pack of LINEUP_PACKAGES) {
-    if (pack.added === LINEUP_STATE_VERSION) selectedPackages.add(pack.id);
-  }
-}
+let selectedPackages = new Set(savedPackages === null ? DEFAULT_PACKAGES : savedPackages.filter(id => LINEUP_PACKAGES.some(p => p.id === id)));
 let hiddenCategories = new Set(Array.isArray(savedLineup.hiddenCategories) ? savedLineup.hiddenCategories.filter(name => PREMIUM_CATEGORY_NAMES.includes(name)) : []);
-if (migratePackages) saveLineupState();
 let channels = [];
 let current = null;
 let activeGroup = null;
@@ -962,8 +956,10 @@ async function buildLocalPlaylists(byKey, city, local, token, spareDocs) {
     itemsByKey[key] = items;
   }
 
-  if (city.toLowerCase() === "chicago") {
-    itemsByKey.news = itemsByKey.news || [];
+  // If the detected city has no archived newscast, keep the local news channel
+  // on the air with verified retro newscasts rather than a random vault clip.
+  if (!(itemsByKey.news || []).length) {
+    itemsByKey.news = [];
     for (const [id, f] of Object.entries(LOCAL_NEWS_ITEMS)) {
       if (itemsByKey.news.some(i => i.id === id)) continue;
       const titleKey = f.title.toLowerCase().trim();
@@ -1001,11 +997,15 @@ async function buildLocalPlaylists(byKey, city, local, token, spareDocs) {
     const sec = LOCAL_SECTIONS[i];
     const items = itemsByKey[sec.key] || [];
     const c = standardChannels[i];
-    const isVault = !(byKey[sec.key] || []).length || !items.length;
+    const isVault = !items.length;
+    const newsFallback = sec.key === "news" && !(byKey.news || []).length;
     if (isVault) {
       vaultCount++;
       c.name = local && city ? `${city} Local Vault${vaultCount > 1 ? " " + vaultCount : ""}` : `Local Vault${vaultCount > 1 ? " " + vaultCount : ""}`;
       c.description = `A rotating mix of local archive programming${local && city ? " — " + city : ""}`;
+    } else if (newsFallback) {
+      c.name = "Retro News";
+      c.description = "Retro newscasts from the 1990s and 2000s";
     } else {
       c.name = localName(i, city, local);
       c.description = `${sec.desc}${local && city ? " — " + city : ""}`;
@@ -1108,6 +1108,7 @@ async function detectGeo() {
   renderGroups();
   renderChannels();
   renderEPG();
+  preloadArchive();
 }
 
 function renderChannels() {
@@ -1245,7 +1246,7 @@ function setPremium(on) {
 
 function resetLineup() {
   premiumOn = true;
-  selectedPackages = new Set(LINEUP_PACKAGES.map(p => p.id));
+  selectedPackages = new Set(DEFAULT_PACKAGES);
   hiddenCategories.clear();
   saveLineupState();
   rebuildChannels();
@@ -1451,7 +1452,7 @@ async function preloadSpelunkr() {
 }
 
 async function preloadArchive() {
-  const queue = standardChannels.filter(c => c.mode === "archive" && c.group !== "local");
+  const queue = standardChannels.filter(c => c.mode === "archive");
   const workers = Array.from({ length: 4 }, async () => {
     while (queue.length) {
       const c = queue.shift();
